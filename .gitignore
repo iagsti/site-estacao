@@ -1,0 +1,9 @@
+.env
+.est
+*.sqlite3
+__pycache__
+.vscode/
+staticfiles
+*.ipynb
+.ipynb*
+.pytest*
