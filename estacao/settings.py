@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'estacao.core',
     'estacao.pessoal',
+    'test_without_migrations'
 ]
 
 MIDDLEWARE = [

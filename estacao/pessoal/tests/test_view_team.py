@@ -3,7 +3,7 @@ from django.shortcuts import resolve_url as r
 from django.utils.translation import gettext as _
 
 
-class PessoalViewGetTest(TestCase):
+class TeamViewGetTest(TestCase):
     def setUp(self):
         self.resp = self.client.get(r('pessoal:pessoal_index'))
 
