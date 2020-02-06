@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% block content %}
+    <div class="row">
+        <p class="title h2">{% trans 'Pessoal' %}</p>
+    </div>
+    
+    <div class="row">
+        {% for person in team %}
+        <div class="col-md-3 col-sm-6 card-row-deck">
+            <div class="card mb-4 shadow">
+                <img src="{{ person.image }}" alt="{{ person.name }} image" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{ person.name }}</h5>
+                    <small class="text-muted">{{ person.role }}</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}
