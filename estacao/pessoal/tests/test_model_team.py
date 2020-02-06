@@ -1,5 +1,6 @@
 from django.test import TestCase
 from estacao.pessoal.models import TeamModel
+from django.db.models import FileField
 
 
 class TeamModelTest(TestCase):
@@ -17,3 +18,12 @@ class TeamModelTest(TestCase):
 
     def test_create(self):
       self.assertTrue(TeamModel.objects.exists())
+
+    def test_str(self):
+        expected = 'Dr. Thomas Jeferson'
+        self.assertEqual(expected, str(self.obj))
+
+    def test_image_field(self):
+        """Image field should be a FileField"""
+        field = TeamModel.image.field
+        self.assertIsInstance(field, FileField)

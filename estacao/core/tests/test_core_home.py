@@ -32,8 +32,8 @@ class HomeGetTest(TestCase):
                 self.assertContains(self.resp, expected, count)
 
     def test_menu_content(self):
-        """Template should render a list o menu itens"""
-        menu_itens = [_('Home'), _('Contato e Localização'), _('Pessoal')]
+        """Template should render a list of menu itens"""
+        menu_itens = ['Home', _('Contato e Localização'), _('Pessoal')]
         
         for item in menu_itens:
             with self.subTest():
