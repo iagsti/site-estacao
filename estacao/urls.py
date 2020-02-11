@@ -22,6 +22,7 @@ from django.conf import settings
 urlpatterns = [
     path('', include('estacao.core.urls')),
     path('pessoal/', include('estacao.pessoal.urls')),
+    path('contato/', include('estacao.contact.urls')),
     path('admin/', admin.site.urls),
 ]
 

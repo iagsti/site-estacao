@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="row">
+        <p class="title h2">{% trans 'Informações para contato' %}</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Informações Gerais" %}</h5>
+                    <h6 class="card-subtitle text-muted mb-4">Vistas e solicitação de dados</h6>
+                    <div class="card-text">
+                        {% include 'general_info.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Telefone/Fax" %}</h5>
+                    <div class="card-text">
+                        {% include 'phone.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Endereço" %}</h5>
+                    <h6 class="text-muted">
+                        Parque de Ciência e Tecnologia da USP
+                    </h6>
+                    <h6 class="text-muted">
+                        Av Miguel Stéfano, No.4200, Água Funda - São Paulo
+                    </h6>
+                    <h6 class="text-muted">
+                        CEP 04301-904 - Brasil
+                    </h6>
+                    <div class="card-text">
+                        {% include 'address.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

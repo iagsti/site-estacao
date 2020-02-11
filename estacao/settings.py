@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'fontawesome_5',
+    'test_without_migrations',
     'estacao.core',
     'estacao.pessoal',
-    'test_without_migrations'
+    'estacao.contact',
 ]
 
 MIDDLEWARE = [
