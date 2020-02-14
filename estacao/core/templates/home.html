@@ -20,15 +20,19 @@
 <div class="row">
     <div class="col-md-4 col-sm-12">
         <div class="card mb-4">
+            <img src="https://i.picsum.photos/id/1056/700/250.jpg" alt="" class="card-img">
+            <div class="card-img-overlay">
+                <h5 class="card-title text-light">{% trans 'Condições Atuais' %}</h5>
+            </div>
             <div class="card-body">
-                <h5 class="card-title">{% trans 'Condições Atuais' %}</h5>
+                <div class="card-text">{% include 'current_conditions.html' %}</div>
             </div>
         </div>
     </div>
     <div class="col-md-8 col-sm-12">
         <div class="card mb-4">
             <div class="card-body">
-                <h5 class="card-title">{% trans 'Meteograma' %}</h5>
+                <h5 class="card-title">{% trans 'Meteograma' %}</h5>                
             </div>
         </div>
     </div>
