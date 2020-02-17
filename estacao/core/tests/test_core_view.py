@@ -26,9 +26,13 @@ class ViewCoreTest(TestCase):
     
         self.assertDictEqual(conditions, values)
 
+    def test_current_conditions_temperature_header(self):
+        expected = '22.7ºC - 77.3%'
+        self.assertContains(self.resp, expected)
+
     def test_current_conditions_values(self):
         """Template should render current condition values"""
-        condition_values = ((1, 22.7), (1, 18.5), (1, 77.3), (1,'17.9 °C às 14:00'), (1,'26.0 °C às 15:00'),
+        condition_values = ((2, 22.7), (1, 18.5), (2, 77.3), (1,'17.9 °C às 14:00'), (1,'26.0 °C às 15:00'),
                             (1, 'Calmo'), (1, '924.8 hPa'), (1, 'Sc/Fc - 6/10'), (2, '----'), (1, 'Não Disponível'))
 
         for count, expected in condition_values:
