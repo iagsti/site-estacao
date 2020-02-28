@@ -3,11 +3,11 @@
 <ul class="list-group list-group-flush">
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Temperatura do Ar' %}</small>
-        <span class="badge badge-primary badge-pill">{{ conditions.temperatura_ar }}</span>
+        <span class="badge badge-primary badge-pill">{{ conditions.temperatura_ar }}ºC</span>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Temperatura do Ponto de Orvalho' %}</small>
-        <small class="badge badge-primary badge-pill">{{ conditions.temperatura_orvalho }}</small>
+        <small class="badge badge-primary badge-pill">{{ conditions.temperatura_orvalho }}ºC</small>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'UR' %}</small>
@@ -15,19 +15,25 @@
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Temperatura Mínima' %}</small>
-        <small class="badge badge-primary badge-pill">{{ conditions.temperatura_min }}</small>
+        <small class="badge badge-primary badge-pill">{{ conditions.temperatura_min }}ºC</small>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Temperatura Máxima' %}</small>
-        <small class="badge badge-primary badge-pill">{{ conditions.temperatura_max }}</small>
+        <small class="badge badge-primary badge-pill">{{ conditions.temperatura_max }}ºC</small>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Vento' %}</small>
-        <small class="badge badge-primary badge-pill">{{ conditions.vento }}</small>
+        <small class="badge badge-primary badge-pill">
+            {% if conditions.dir == 'C' %}
+                Calmo
+            {% else %}
+                {{ conditions.vento }} m/s de {{ conditions.dir }}
+            {% endif %}
+        </small>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Pressão' %}</small>
-        <small class="badge badge-primary badge-pill">{{ conditions.pressao }}</small>
+        <small class="badge badge-primary badge-pill">{{ conditions.pressao }} hPa</small>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Visibilidade Horizontal' %}</small>

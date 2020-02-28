@@ -1,4 +1,5 @@
 from django.db import models
+from estacao.core.managers import ConditionsManager
 
 
 class Dados(models.Model):
@@ -32,3 +33,5 @@ class Dados(models.Model):
     class Meta:
         managed = False
         db_table = 'dados'
+
+    objects = ConditionsManager()

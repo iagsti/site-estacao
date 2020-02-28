@@ -1,17 +1,26 @@
 from django.shortcuts import render
+from estacao.core.models import Dados
 
 
 def home(request):
-    conditions = get_conditions()
+    conditions = make_conditions(Dados.objects)
     context = {'conditions': conditions}
     return render(request, 'home.html', context)
 
 
-def get_conditions():
-    conditions = dict(temperatura_ar='22.7ºC', temperatura_orvalho='18.5ºC', ur='77.3%',
-                        temperatura_min='17.9 °C às 14:00', temperatura_max='26.0 °C às 15:00',
-                        vento='Calmo', pressao='924.8 hPa', visibilidade='4 km a 10 km',
-                        nuvens_baixas='Sc/Fc - 6/10', nuvens_medias='----', nuvens_altas='----',
-                        diversos='Não Disponível')
+def make_conditions(conditions):
+    dados = Dados.objects.max_temperature()
+    ur = Dados.objects.relative_humidity()
+    td = Dados.objects.td()
+    p_hpa = Dados.objects.p_hpa()
+    visibility = Dados.objects.visibility()
+    nuvens_baixas = Dados.objects.nuvens_baixas()
+    nuvens_medias = Dados.objects.nuvens_medias()
+    nuvens_altas = Dados.objects.nuvens_altas()
 
-    return conditions
+    return {'temperatura_ar': dados.tseco, 'ur': ur, 'temperatura_orvalho': td,
+            'temperatura_min': dados.tmin, 'temperatura_max': dados.tmax,
+            'vento': dados.vento, 'dir': dados.dir, 'pressao': p_hpa,
+            'visibilidade': visibility, 'nuvens_baixas': nuvens_baixas,
+            'nuvens_medias': nuvens_medias, 'nuvens_altas': nuvens_altas,
+            'diversos': 'Não disponível'}
