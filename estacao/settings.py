@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from decouple import config, Csv
 from dj_database_url import parse as dburl
-from estacao.db_routers import DadosRouter
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -27,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG'  ,default=False, cast=bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
@@ -85,14 +84,11 @@ WSGI_APPLICATION = 'estacao.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
-dados_default = 'sqlite:///' + os.path.join(BASE_DIR, 'db.dados.sqlite3')
 
 DATABASES = {
     'default': config('DATABASES', default=default_dburl, cast=dburl),
-    'dados': config('DADOS_DATABASE', default=dados_default, cast=dburl)
 }
 
-DATABASE_ROUTERS = [DadosRouter()]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
