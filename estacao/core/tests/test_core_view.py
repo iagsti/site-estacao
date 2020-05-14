@@ -15,3 +15,7 @@ class ViewCoreTest(TestCase):
         for expected in items:
             with self.subTest():
                 self.assertContains(self.resp, expected)
+
+    def test_context_has_weather_data(self):
+        """Context should have conditions data"""
+        self.assertIn('conditions', self.resp.context)

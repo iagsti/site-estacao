@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.utils.translation import gettext as _
 from django.shortcuts import resolve_url as r
+import httpretty
+from django.conf import settings
 
 
 class HomeGetTest(TestCase):
@@ -25,7 +27,7 @@ class HomeGetTest(TestCase):
 
     def test_html_tags(self):
         """It must contain a set of html tags"""
-        content = ((1, '<nav'),(1, '<header'))
+        content = ((1, '<nav'), (1, '<header'))
 
         for count, expected in content:
             with self.subTest():
@@ -47,3 +49,46 @@ class HomeGetTest(TestCase):
         for count, expected in content:
             with self.subTest():
                 self.assertContains(self.resp, expected, count)
+
+
+class HomeGetMeteorologicDataTest(TestCase):
+    def setUp(self):
+        with self.settings(ESTACAO_API_URI='http://api.estacao.br'):
+            httpretty.enable()
+            httpretty.register_uri(
+                method=httpretty.GET,
+                uri=settings.ESTACAO_API_URI,
+                body=self.make_request_body(),
+                content_type='application/json',
+            )
+            self.resp = self.client.get(r('core:home'))
+
+    def tearDown(self):
+        httpretty.disable()
+
+    def test_render_conditions_data(self):
+        """Conditions data should be rendered"""
+        conditions_data = ((3, '>20'), (2, '>10'), (1, '>80'), (1, 'calmo'),
+                           (1, '>129'), (1, '>4'), (1, 'Ac/As-10/10'),
+                           (2, 'Am/As-20/20'))
+
+        for count, expected in conditions_data:
+            with self.subTest():
+                self.assertContains(self.resp, expected, count)
+
+    def make_request_body(self):
+        data = '{\
+                "temperatura_ar": "20",\
+                "temperatura_orvalho": "10",\
+                "ur": "80",\
+                "temperatura_min": "10",\
+                "temperatura_max": "20",\
+                "vento": "calmo",\
+                "pressao": "129",\
+                "visibilidade_min": "4",\
+                "visibilidade_max": "10",\
+                "nuvens_baixas": "Ac/As-10/10",\
+                "nuvens_medias": "Am/As-20/20",\
+                "nuvens_altas": "Am/As-20/20"\
+            }'
+        return data

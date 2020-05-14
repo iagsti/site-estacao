@@ -138,3 +138,8 @@ MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
+
+
+# APIS
+
+ESTACAO_API_URI = config('ESTACAO_API_URI')
