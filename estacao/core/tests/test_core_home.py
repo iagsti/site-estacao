@@ -70,7 +70,7 @@ class HomeGetMeteorologicDataTest(TestCase):
         """Conditions data should be rendered"""
         conditions_data = ((3, '>20'), (2, '>10'), (1, '>80'), (1, 'calmo'),
                            (1, '>129'), (1, '>4'), (1, 'Ac/As-10/10'),
-                           (2, 'Am/As-20/20'))
+                           (2, 'Am/As-20/20'), (1, '10/04/2020 - 13:20'))
 
         for count, expected in conditions_data:
             with self.subTest():
@@ -78,6 +78,7 @@ class HomeGetMeteorologicDataTest(TestCase):
 
     def make_request_body(self):
         data = '{\
+                "data": "10/04/2020 - 13:20",\
                 "temperatura_ar": "20",\
                 "temperatura_orvalho": "10",\
                 "ur": "80",\
