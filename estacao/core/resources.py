@@ -9,3 +9,15 @@ class WeatherResource:
     def get_weather_data(self):
         response = requests.get(self.uri)
         return response
+
+
+class MeteogramTemperature:
+    def temperature_min(self):
+        url = self.uri + '/temperature_min'
+        response = requests.get(url)
+        return response
+
+    def temperature_max(self):
+        url = self.uri + '/temperature_max'
+        response = requests.get(url)
+        return response
