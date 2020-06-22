@@ -35,5 +35,3 @@ class ResourcesMeteogramTemperatureTest(TestCase):
             {'date': '2020-01-01 00:17:00', 'temp': '18'},
         ]
         return data
-
-
