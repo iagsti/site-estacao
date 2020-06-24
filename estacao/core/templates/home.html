@@ -1,6 +1,16 @@
 {% extends 'main.html' %}
 {% load i18n %}
 
+{% block scripts %}
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.1.0.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.1.0.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.1.0.min.js"
+        crossorigin="anonymous"></script>
+    {{ temperature.get_script|safe }}
+{% endblock scripts %}
+
 {% block header %}
     <!-- Header -->
     <header class="bg-primary py-5 mb-5">
@@ -34,7 +44,8 @@
     <div class="col-md-8 col-sm-12">
         <div class="card mb-4">
             <div class="card-body">
-                <h5 class="card-title">{% trans 'Meteograma' %}</h5>                
+                <h5 class="card-title">{% trans 'Meteograma' %}</h5>
+                {{ temperature.get_div|safe }}
             </div>
         </div>
     </div>
