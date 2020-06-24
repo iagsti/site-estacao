@@ -1,11 +1,12 @@
+import json
 from django.test import TestCase
 from django.utils.translation import gettext as _
 from django.shortcuts import resolve_url as r
-import httpretty
-from django.conf import settings
+from .mock import mock_api
 
 
 class HomeGetTest(TestCase):
+    @mock_api
     def setUp(self):
         self.resp = self.client.get(r('core:home'))
 
@@ -52,19 +53,9 @@ class HomeGetTest(TestCase):
 
 
 class HomeGetMeteorologicDataTest(TestCase):
+    @mock_api
     def setUp(self):
-        with self.settings(ESTACAO_API_URI='http://api.estacao.br'):
-            httpretty.enable()
-            httpretty.register_uri(
-                method=httpretty.GET,
-                uri=settings.ESTACAO_API_URI,
-                body=self.make_request_body(),
-                content_type='application/json',
-            )
-            self.resp = self.client.get(r('core:home'))
-
-    def tearDown(self):
-        httpretty.disable()
+        self.resp = self.client.get(r('core:home'))
 
     def test_render_conditions_data(self):
         """Conditions data should be rendered"""
@@ -77,19 +68,19 @@ class HomeGetMeteorologicDataTest(TestCase):
                 self.assertContains(self.resp, expected, count)
 
     def make_request_body(self):
-        data = '{\
-                "data": "10/04/2020 - 13:20",\
-                "temperatura_ar": "20",\
-                "temperatura_orvalho": "10",\
-                "ur": "80",\
-                "temperatura_min": "10",\
-                "temperatura_max": "20",\
-                "vento": "calmo",\
-                "pressao": "129",\
-                "visibilidade_min": "4",\
-                "visibilidade_max": "10",\
-                "nuvens_baixas": "Ac/As-10/10",\
-                "nuvens_medias": "Am/As-20/20",\
-                "nuvens_altas": "Am/As-20/20"\
-            }'
-        return data
+        data = {
+                "data": "10/04/2020 - 13:20",
+                "temperatura_ar": "20",
+                "temperatura_orvalho": "10",
+                "ur": "80",
+                "temperatura_min": "10",
+                "temperatura_max": "20",
+                "vento": "calmo",
+                "pressao": "129",
+                "visibilidade_min": "4",
+                "visibilidade_max": "10",
+                "nuvens_baixas": "Ac/As-10/10",
+                "nuvens_medias": "Am/As-20/20",
+                "nuvens_altas": "Am/As-20/20"
+            }
+        return json.dumps(data)

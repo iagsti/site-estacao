@@ -1,7 +1,7 @@
 from django.test import TestCase
 from estacao.core.charts.temperature import Temperature
 from estacao.core.resources import MeteogramTemperature
-from estacao.core.tests.mock import mock_meteogram_request
+from estacao.core.tests.mock import mock_api
 
 API_URI = 'http://api.estacao.iag.usp.br/v0/2020-01-01/2020-02-01/'
 
@@ -18,7 +18,7 @@ class TemperatureTest(TestCase):
         """It should have load_data attribute"""
         self.assertTrue(hasattr(self.temp, 'load_data'))
 
-    @mock_meteogram_request
+    @mock_api
     def test_load_data(self):
         """It should get temperature data"""
         self.temp.plot()
@@ -39,7 +39,7 @@ class TemperatureTest(TestCase):
         self.temp.extract_data(self.make_data())
         self.assertDictEqual(expected, self.temp.extracted_data)
 
-    @mock_meteogram_request
+    @mock_api
     def test_generate_components(self):
         self.temp.plot()
         self.temp.generate_components()
@@ -48,18 +48,18 @@ class TemperatureTest(TestCase):
             with self.subTest():
                 self.assertTrue(hasattr(self.temp, expected), msg=message)
 
-    @mock_meteogram_request
+    @mock_api
     def test_plot(self):
         self.temp.plot()
         self.assertIn('text/javascript', self.temp.script)
         self.assertIn('class', self.temp.div)
 
-    @mock_meteogram_request
+    @mock_api
     def test_get_script(self):
         self.temp.plot()
         self.assertIn('text/javascript', self.temp.get_script())
 
-    @mock_meteogram_request
+    @mock_api
     def test_get_div(self):
         self.temp.plot()
         self.assertIn('class', self.temp.get_div())

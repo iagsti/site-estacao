@@ -4,30 +4,56 @@ import functools
 from django.conf import settings
 
 
-API_URI = getattr(settings, 'API_URL') + '/2020-01-01/2020-02-01/'
+def mock_api(fn):
+    @functools.wraps(fn)
+    @httpretty.activate
+    def wrapper(*args, **kwargs):
+        register_uri()
+        response = fn(*args, **kwargs)
+        return response
+    return wrapper
 
 
-def mock_meteogram_request(uri=API_URI):
-    def request_decorator(request):
-        @functools.wraps(request)
-        @httpretty.activate
-        def wrapper(*args, **kwargs):
-            body = json.dumps(make_data())
-            httpretty.register_uri(httpretty.GET, uri=uri, body=body)
-            response = request(*args, **kwargs)
-            return response
-        return wrapper
-    return request_decorator
+def register_uri():
+    api_list = fake_api()
+    for api in api_list:
+        httpretty.register_uri(
+            httpretty.GET,
+            uri=api['uri'],
+            body=api['body']
+        )
 
 
-def make_data():
-    data = {
-        'temp_min':  [
-            {'date': '2020-01-01 00:13:00', 'temp': '12'},
-            {'date': '2020-01-01 00:14:00', 'temp': '23'},
-            {'date': '2020-01-01 00:15:00', 'temp': '20'},
-            {'date': '2020-01-01 00:16:00', 'temp': '19'},
-            {'date': '2020-01-01 00:17:00', 'temp': '18'},
-        ]
-    }
-    return data
+def fake_api():
+    return [
+        {
+            'uri': getattr(settings, 'API_URL') + '/2020-01-01/2020-02-01/',
+            'body': json.dumps({
+                'temp_min':  [
+                    {'date': '2020-01-01 00:13:00', 'temp': '12'},
+                    {'date': '2020-01-01 00:14:00', 'temp': '23'},
+                    {'date': '2020-01-01 00:15:00', 'temp': '20'},
+                    {'date': '2020-01-01 00:16:00', 'temp': '19'},
+                    {'date': '2020-01-01 00:17:00', 'temp': '18'},
+                ]
+            })
+        },
+        {
+            'uri': getattr(settings, 'ESTACAO_API_URI'),
+            'body': json.dumps({
+                        "data": "10/04/2020 - 13:20",
+                        "temperatura_ar": "20",
+                        "temperatura_orvalho": "10",
+                        "ur": "80",
+                        "temperatura_min": "10",
+                        "temperatura_max": "20",
+                        "vento": "calmo",
+                        "pressao": "129",
+                        "visibilidade_min": "4",
+                        "visibilidade_max": "10",
+                        "nuvens_baixas": "Ac/As-10/10",
+                        "nuvens_medias": "Am/As-20/20",
+                        "nuvens_altas": "Am/As-20/20"
+            })
+        }
+    ]
