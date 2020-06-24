@@ -12,6 +12,9 @@ class WeatherResource:
 
 
 class MeteogramTemperature:
+    def __init__(self):
+        self.uri = settings.ESTACAO_API_URI
+
     def temperature_min(self):
         url = self.uri + '/temperature_min'
         response = requests.get(url)
