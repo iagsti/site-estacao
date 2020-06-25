@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.shortcuts import resolve_url as r
+from importlib.metadata import version
 from .mock import mock_api
 
 
@@ -15,10 +16,11 @@ class HomeMeteogramTest(TestCase):
         self.assertContains(self.resp, '<div class="bk-root"')
 
     def test_has_bokeh_library(self):
+        bokeh_version = version('bokeh')
         libraries = [
-            'src="https://cdn.bokeh.org/bokeh/release/bokeh-2.1.0.min.js',
-            'src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.1.0.min.js',
-            'src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.1.0.min.js'
+            'src="https://cdn.bokeh.org/bokeh/release/bokeh-{}.min.js'.format(bokeh_version),
+            'src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-{}.min.js'.format(bokeh_version),
+            'src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-{}.min.js'.format(bokeh_version)
         ]
         for expected in libraries:
             with self.subTest():
