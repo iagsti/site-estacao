@@ -1,6 +1,7 @@
 import httpretty
 import json
 import functools
+import numpy as np
 from django.conf import settings
 
 
@@ -24,10 +25,20 @@ def register_uri():
         )
 
 
+def mock_uri():
+    today = np.datetime64('today')
+    datetime_delta = np.timedelta64(1, 'D')
+    yesterday = today - datetime_delta
+    date_ini = str(yesterday)
+    date_end = str(today)
+    url = getattr(settings, 'API_URL')
+    return '{}/{}/{}/'.format(url, date_ini, date_end)
+
+
 def fake_api():
     return [
         {
-            'uri': getattr(settings, 'API_URL') + '/2020-01-01/2020-02-01/',
+            'uri': mock_uri(),
             'body': json.dumps({
                 'temp_min':  [
                     {'date': '2020-01-01 00:13:00', 'temp': '12'},
