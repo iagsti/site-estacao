@@ -1,8 +1,9 @@
 import requests
-from datetime import datetime
+import numpy as np
 from requests.auth import HTTPBasicAuth
 from django.conf import settings
 from bokeh.plotting import figure
+from bokeh.layouts import layout
 from bokeh.embed import components
 
 
@@ -10,15 +11,25 @@ API_URL = getattr(settings, 'API_URL')
 
 
 class Temperature():
-    def plot(self, date_ini='2020-01-01', date_end='2020-02-01'):
-        self.generate_uri(date_ini, date_end)
+    def __init__(self, date_ini=None, date_end=None):
+        self.date_ini = date_ini
+        self.date_end = date_end
+        if not date_ini or not date_end:
+            today = np.datetime64('today')
+            datetime_delta = np.timedelta64(1, 'D')
+            yesterday = today - datetime_delta
+            self.date_ini = str(yesterday)
+            self.date_end = str(today)
+
+    def plot(self):
+        self.generate_uri()
         self.load_data()
         self.extract_data(self.temperature_data)
         self.generate_components()
         self.set_components_attributes()
 
-    def generate_uri(self, date_ini, date_end):
-        uri = '{}/{}/{}/'.format(API_URL, date_ini, date_end)
+    def generate_uri(self):
+        uri = '{}/{}/{}/'.format(API_URL, self.date_ini, self.date_end)
         self.uri = uri
 
     def load_data(self):
@@ -37,15 +48,16 @@ class Temperature():
     def generate_components(self):
         date = self.to_datetime(self.extracted_data['date'])
         temperature = self.extracted_data['temp_min']
-        temp_figure = figure(x_axis_type='datetime')
-        temp_figure.line(date, temperature, legend_label="Temp", line_width=1)
-        script, div = components(temp_figure)
+        temp_figure = figure(x_axis_type='datetime', plot_height=300)
+        temp_figure.line(date, temperature)
+        plot = layout([temp_figure], sizing_mode='stretch_width')
+        script, div = components(plot)
         self.components = {'script': script, 'div': div}
 
     def to_datetime(self, date_list):
         datetime_list = []
         for date in date_list:
-            date_time = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            date_time = np.datetime64(date)
             datetime_list.append(date_time)
         return datetime_list
 
