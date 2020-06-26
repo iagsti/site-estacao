@@ -24,6 +24,11 @@ class TemperatureTest(TestCase):
         self.temp.plot()
         self.assertDictEqual(self.temp.temperature_data, self.make_data())
 
+    def test_exception_on_load_data(self):
+        expected = {'tem_min': [{'data': '2020-06-25 13:00:00', 'temp': '0'}]}
+        self.temp.plot()
+        self.assertDictEqual(expected, self.temp.temperature_data)
+
     def test_has_plot_attribute(self):
         """It should have plot attribute"""
         self.assertTrue(hasattr(self.temp, 'plot'))
@@ -37,6 +42,11 @@ class TemperatureTest(TestCase):
         expected['date'] = [item['date'] for item in data['temp_min']]
         expected['temp_min'] = [item['temp'] for item in data['temp_min']]
         self.temp.extract_data(self.make_data())
+        self.assertDictEqual(expected, self.temp.extracted_data)
+
+    def test_extract_data_with_empty_data(self):
+        expected = self.make_default_data()
+        self.temp.extract_data({})
         self.assertDictEqual(expected, self.temp.extracted_data)
 
     @mock_api
