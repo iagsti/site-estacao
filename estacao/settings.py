@@ -143,3 +143,6 @@ STATIC_ROOT = 'staticfiles'
 # APIS
 
 ESTACAO_API_URI = config('ESTACAO_API_URI')
+API_URL = config('API_URL')
+API_USER = config('API_USER')
+API_PASWD = config('API_PASWD')

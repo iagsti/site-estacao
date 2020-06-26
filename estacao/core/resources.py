@@ -7,5 +7,37 @@ class WeatherResource:
         self.uri = settings.ESTACAO_API_URI
 
     def get_weather_data(self):
-        response = requests.get(self.uri)
+        try:
+            response = requests.get(self.uri).json()
+        except Exception:
+            response = {
+                "data": "-",
+                "temperatura_ar": "-",
+                "temperatura_orvalho": "-",
+                "ur": "-",
+                "temperatura_min": "-",
+                "temperatura_max": "-",
+                "vento": "-",
+                "pressao": "-",
+                "visibilidade_min": "-",
+                "visibilidade_max": "-",
+                "nuvens_baixas": "-",
+                "nuvens_medias": "-",
+                "nuvens_altas": "-"
+            }
+        return response
+
+
+class MeteogramTemperature:
+    def __init__(self):
+        self.uri = settings.ESTACAO_API_URI
+
+    def temperature_min(self):
+        url = self.uri + '/temperature_min'
+        response = requests.get(url)
+        return response
+
+    def temperature_max(self):
+        url = self.uri + '/temperature_max'
+        response = requests.get(url)
         return response

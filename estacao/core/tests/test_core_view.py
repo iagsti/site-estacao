@@ -1,8 +1,10 @@
 from django.test import TestCase
 from django.shortcuts import resolve_url as r
+from estacao.core.tests.mock import mock_api
 
 
 class ViewCoreTest(TestCase):
+    @mock_api
     def setUp(self):
         self.resp = self.client.get(r('core:home'))
 

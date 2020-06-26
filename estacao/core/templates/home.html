@@ -1,6 +1,12 @@
 {% extends 'main.html' %}
 {% load i18n %}
 
+{% block scripts %}
+    {{ bokehcdn|safe }}
+    {{ temperature.get_script|safe }}
+{% endblock scripts %}
+
+
 {% block header %}
     <!-- Header -->
     <header class="bg-primary py-5 mb-5">
@@ -34,7 +40,10 @@
     <div class="col-md-8 col-sm-12">
         <div class="card mb-4">
             <div class="card-body">
-                <h5 class="card-title">{% trans 'Meteograma' %}</h5>                
+                <h5 class="card-title">{% trans 'Meteograma' %}</h5>
+                <div class="p-5">
+                    {{ temperature.get_div|safe }}
+                </div>
             </div>
         </div>
     </div>
@@ -80,5 +89,5 @@
             </div>
         </div>
     </div>
-</div>  
+</div>
 {% endblock content%}
