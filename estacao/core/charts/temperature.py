@@ -33,22 +33,30 @@ class Temperature():
         self.uri = uri
 
     def load_data(self):
-        user = getattr(settings, 'API_USER')
-        paswd = getattr(settings, 'API_PASWD')
-        auth = HTTPBasicAuth(username=user, password=paswd)
-        response = requests.get(self.uri, auth=auth)
-        self.temperature_data = response.json()
+        try:
+            user = getattr(settings, 'API_USER')
+            paswd = getattr(settings, 'API_PASWD')
+            auth = HTTPBasicAuth(username=user, password=paswd)
+            response = requests.get(self.uri, auth=auth).json()
+        except Exception:
+            response = {'tem_min': [{'data': '2020-06-25 13:00:00', 'temp': '0'}]}
+        self.temperature_data = response
 
     def extract_data(self, data):
-        extracted = dict()
-        extracted['date'] = [item['date'] for item in data['temp_min']]
-        extracted['temp_min'] = [item['temp'] for item in data['temp_min']]
+        try:
+            extracted = dict()
+            extracted['date'] = [item['date'] for item in data['temp_min']]
+            extracted['temp_min'] = [item['temp'] for item in data['temp_min']]
+        except KeyError:
+            extracted = {'date': ['2020-06-25 13:00:00'], 'temp_min': ['0']}
         self.extracted_data = extracted
 
     def generate_components(self):
         date = self.to_datetime(self.extracted_data['date'])
         temperature = self.extracted_data['temp_min']
-        temp_figure = figure(x_axis_type='datetime', plot_height=300)
+        temp_figure = figure(x_axis_type='datetime', plot_height=300,
+                             tools="pan,wheel_zoom,box_zoom,reset")
+        temp_figure.toolbar.logo = None
         temp_figure.line(date, temperature)
         plot = layout([temp_figure], sizing_mode='stretch_width')
         script, div = components(plot)
