@@ -90,3 +90,6 @@ class TemperatureTest(TestCase):
             ]
         }
         return data
+
+    def make_default_data(self):
+        return {'date': ['2020-06-25 13:00:00'], 'temp_min': ['0']}
