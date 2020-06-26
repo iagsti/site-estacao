@@ -7,7 +7,24 @@ class WeatherResource:
         self.uri = settings.ESTACAO_API_URI
 
     def get_weather_data(self):
-        response = requests.get(self.uri)
+        try:
+            response = requests.get(self.uri).json()
+        except Exception:
+            response = {
+                "data": "-",
+                "temperatura_ar": "-",
+                "temperatura_orvalho": "-",
+                "ur": "-",
+                "temperatura_min": "-",
+                "temperatura_max": "-",
+                "vento": "-",
+                "pressao": "-",
+                "visibilidade_min": "-",
+                "visibilidade_max": "-",
+                "nuvens_baixas": "-",
+                "nuvens_medias": "-",
+                "nuvens_altas": "-"
+            }
         return response
 
 
