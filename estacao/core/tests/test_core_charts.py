@@ -3,7 +3,7 @@ from estacao.core.charts.temperature import Temperature
 from estacao.core.resources import MeteogramTemperature
 from estacao.core.tests.mock import mock_api, mock_uri
 
-API_URI = mock_uri()
+API_URI = mock_uri('temperature_min')
 
 
 class TemperatureTest(TestCase):
@@ -85,8 +85,9 @@ class TemperatureTest(TestCase):
                 {'date': '2020-01-01 00:13:00', 'temp': '12'},
                 {'date': '2020-01-01 00:14:00', 'temp': '23'},
                 {'date': '2020-01-01 00:15:00', 'temp': '20'},
-                {'date': '2020-01-01 00:16:00', 'temp': '19'},
-                {'date': '2020-01-01 00:17:00', 'temp': '18'},
+                {'date': '2020-01-02 00:16:00', 'temp': '19'},
+                {'date': '2020-01-02 00:17:00', 'temp': '18'},
+                {'date': '2020-01-02 00:17:00', 'temp': '12'},
             ]
         }
         return data
