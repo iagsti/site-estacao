@@ -27,13 +27,13 @@ def register_uri():
         )
 
 
-def make_path(resource=''):
+def make_path(resource='', version='v0'):
     today = np.datetime64('today')
     datetime_delta = np.timedelta64(1, 'D')
     yesterday = today - datetime_delta
     date_ini = str(yesterday)
     date_end = str(today)
-    return path.join('/v0/', resource, date_ini, date_end)
+    return path.join(version, resource, date_ini, date_end)
 
 
 def mock_uri(resource=''):
@@ -60,7 +60,7 @@ def fake_api():
         {
             'uri': mock_uri('temperature_max'),
             'body': json.dumps({
-                'temp_min':  [
+                'temp_max':  [
                     {'date': '2020-01-01 00:13:00', 'temp': '12'},
                     {'date': '2020-01-01 00:14:00', 'temp': '23'},
                     {'date': '2020-01-01 00:15:00', 'temp': '20'},
