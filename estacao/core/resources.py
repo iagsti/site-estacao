@@ -4,7 +4,7 @@ import requests
 
 class WeatherResource:
     def __init__(self):
-        self.uri = settings.ESTACAO_API_URI
+        self.uri = settings.API_URL
 
     def get_weather_data(self):
         try:
@@ -30,7 +30,7 @@ class WeatherResource:
 
 class MeteogramTemperature:
     def __init__(self):
-        self.uri = settings.ESTACAO_API_URI
+        self.uri = settings.API_URL
 
     def temperature_min(self):
         url = self.uri + '/temperature_min'

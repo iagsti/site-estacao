@@ -50,7 +50,7 @@ def fake_api():
             })
         },
         {
-            'uri': getattr(settings, 'ESTACAO_API_URI'),
+            'uri': getattr(settings, 'API_URL'),
             'body': json.dumps({
                         "data": "10/04/2020 - 13:20",
                         "temperatura_ar": "20",
