@@ -2,6 +2,8 @@ import httpretty
 import json
 import functools
 import numpy as np
+from urllib.parse import urljoin
+from os import path
 from django.conf import settings
 
 
@@ -25,27 +27,46 @@ def register_uri():
         )
 
 
-def mock_uri():
+def make_path(resource=''):
     today = np.datetime64('today')
     datetime_delta = np.timedelta64(1, 'D')
     yesterday = today - datetime_delta
     date_ini = str(yesterday)
     date_end = str(today)
+    return path.join('/v0/', resource, date_ini, date_end)
+
+
+def mock_uri(resource=''):
     url = getattr(settings, 'API_URL')
-    return '{}/{}/{}/'.format(url, date_ini, date_end)
+    uri = urljoin(url, make_path(resource))
+    return uri
 
 
 def fake_api():
     return [
         {
-            'uri': mock_uri(),
+            'uri': mock_uri('temperature_min'),
             'body': json.dumps({
                 'temp_min':  [
                     {'date': '2020-01-01 00:13:00', 'temp': '12'},
                     {'date': '2020-01-01 00:14:00', 'temp': '23'},
                     {'date': '2020-01-01 00:15:00', 'temp': '20'},
-                    {'date': '2020-01-01 00:16:00', 'temp': '19'},
-                    {'date': '2020-01-01 00:17:00', 'temp': '18'},
+                    {'date': '2020-01-02 00:16:00', 'temp': '19'},
+                    {'date': '2020-01-02 00:17:00', 'temp': '18'},
+                    {'date': '2020-01-02 00:17:00', 'temp': '12'},
+                ]
+            })
+        },
+        {
+            'uri': mock_uri('temperature_max'),
+            'body': json.dumps({
+                'temp_min':  [
+                    {'date': '2020-01-01 00:13:00', 'temp': '12'},
+                    {'date': '2020-01-01 00:14:00', 'temp': '23'},
+                    {'date': '2020-01-01 00:15:00', 'temp': '20'},
+                    {'date': '2020-01-02 00:16:00', 'temp': '19'},
+                    {'date': '2020-01-02 00:17:00', 'temp': '18'},
+                    {'date': '2020-01-02 00:17:00', 'temp': '12'},
                 ]
             })
         },
