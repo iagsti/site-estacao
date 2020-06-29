@@ -5,12 +5,13 @@ from django.conf import settings
 from bokeh.plotting import figure
 from bokeh.layouts import layout
 from bokeh.embed import components
+from estacao.core.resources import UriManager
 
 
 API_URL = getattr(settings, 'API_URL')
 
 
-class Temperature():
+class Temperature(UriManager):
     def __init__(self, date_ini=None, date_end=None):
         self.date_ini = date_ini
         self.date_end = date_end
@@ -22,15 +23,14 @@ class Temperature():
             self.date_end = str(today)
 
     def plot(self):
-        self.generate_uri()
+        self.make_uri()
         self.load_data()
         self.extract_data(self.temperature_data)
         self.generate_components()
         self.set_components_attributes()
 
-    def generate_uri(self):
-        uri = '{}/{}/{}/'.format(API_URL, self.date_ini, self.date_end)
-        self.uri = uri
+    def make_uri(self):
+        self.uri = self.generate_uri(resource='temperature_min')
 
     def load_data(self):
         try:
