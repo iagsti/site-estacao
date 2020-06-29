@@ -1,6 +1,6 @@
 from django.test import TestCase
 from estacao.core.charts.temperature import Temperature
-from estacao.core.resources import MeteogramTemperature
+from estacao.core.resources import MeteogramTemperature, UriManager
 from estacao.core.tests.mock import mock_api, mock_uri
 
 API_URI = mock_uri('temperature_min')
@@ -74,10 +74,13 @@ class TemperatureTest(TestCase):
         self.temp.plot()
         self.assertIn('class', self.temp.get_div())
 
-    def test_generate_uri(self):
+    def test_make_uri(self):
         expected = API_URI
-        self.temp.generate_uri()
+        self.temp.make_uri()
         self.assertEqual(expected, self.temp.uri)
+
+    def test_instance_of_uri_manager(self):
+        self.assertIsInstance(self.temp, UriManager)
 
     def make_data(self):
         data = {
