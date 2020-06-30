@@ -1,7 +1,10 @@
 from django.test import TestCase
-from estacao.core.charts.temperature import Temperature
+from estacao.core.charts.temperature import Temperature, TemperatureMax
+from estacao.core.charts.chart import TempChart
 from estacao.core.resources import MeteogramTemperature, UriManager
 from estacao.core.tests.mock import mock_api, mock_uri
+from .mock import temperature_min, temperature_max
+
 
 API_URI = mock_uri('temperature_min')
 
@@ -22,7 +25,7 @@ class TemperatureTest(TestCase):
     def test_load_data(self):
         """It should get temperature data"""
         self.temp.plot()
-        self.assertDictEqual(self.temp.temperature_data, self.make_data())
+        self.assertDictEqual(self.temp.temperature_data, temperature_min)
 
     def test_exception_on_load_data(self):
         expected = {'tem_min': [{'data': '2020-06-25 13:00:00', 'temp': '0'}]}
@@ -37,15 +40,15 @@ class TemperatureTest(TestCase):
         self.assertTrue(hasattr(self.temp, 'extract_data'))
 
     def test_extract_data(self):
-        data = self.make_data()
+        data = temperature_min
         expected = dict()
-        expected['date'] = [item['date'] for item in data['temp_min']]
+        expected['date'] = [item['data'] for item in data['temp_min']]
         expected['temp_min'] = [item['temp'] for item in data['temp_min']]
-        self.temp.extract_data(self.make_data())
+        self.temp.extract_data(temperature_min)
         self.assertDictEqual(expected, self.temp.extracted_data)
 
     def test_extract_data_with_empty_data(self):
-        expected = self.make_default_data()
+        expected = {'date': ['2020-06-25 13:00:00'], 'temp_min': ['0']}
         self.temp.extract_data({})
         self.assertDictEqual(expected, self.temp.extracted_data)
 
@@ -82,18 +85,28 @@ class TemperatureTest(TestCase):
     def test_instance_of_uri_manager(self):
         self.assertIsInstance(self.temp, UriManager)
 
-    def make_data(self):
-        data = {
-            'temp_min':  [
-                {'date': '2020-01-01 00:13:00', 'temp': '12'},
-                {'date': '2020-01-01 00:14:00', 'temp': '23'},
-                {'date': '2020-01-01 00:15:00', 'temp': '20'},
-                {'date': '2020-01-02 00:16:00', 'temp': '19'},
-                {'date': '2020-01-02 00:17:00', 'temp': '18'},
-                {'date': '2020-01-02 00:17:00', 'temp': '12'},
-            ]
-        }
-        return data
 
-    def make_default_data(self):
-        return {'date': ['2020-06-25 13:00:00'], 'temp_min': ['0']}
+class TemperaturaMaxTest(TestCase):
+    def setUp(self):
+        self.obj = TemperatureMax()
+
+    def test_instance(self):
+        self.assertIsInstance(self.obj, TemperatureMax)
+
+    def test_is_instance_of_chart(self):
+        self.assertIsInstance(self.obj, TempChart)
+
+    @mock_api
+    def test_make_uri(self):
+        expected = mock_uri(resource='temperature_max')
+        self.obj.make_uri()
+        self.assertEqual(expected, self.obj.uri)
+
+    @mock_api
+    def test_extract_data(self):
+        data = temperature_max
+        expected = dict()
+        expected['date'] = [item['data'] for item in data['temp_max']]
+        expected['temp_max'] = [item['temp'] for item in data['temp_max']]
+        self.obj.extract_data(temperature_max)
+        self.assertDictEqual(expected, self.obj.extracted_data)

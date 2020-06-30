@@ -2,14 +2,15 @@ from django.test import TestCase
 from estacao.core.resources import MeteogramTemperature
 from unittest.mock import MagicMock
 from estacao.core.resources import UriManager
-from .mock import make_path, mock_uri, mock_api
+from .mock import (make_path, mock_uri, mock_api,
+                   temperature_max, temperature_min)
 
 
 class ResourcesMeteogramTemperatureTest(TestCase):
     def setUp(self):
         self.obj = MeteogramTemperature()
         self.original_attribute = self.obj.temperature_min
-        self.obj.temperature_min = MagicMock(return_value=self.make_data())
+        self.obj.temperature_min = MagicMock(return_value=temperature_min['temp_min'])
 
     def tearDown(self):
         super().tearDown()
@@ -22,7 +23,7 @@ class ResourcesMeteogramTemperatureTest(TestCase):
     def test_temperature_min_data(self):
         """It should return temperature data"""
         data = self.obj.temperature_min()
-        self.assertListEqual(data, self.make_data())
+        self.assertListEqual(data, temperature_min['temp_min'])
 
     def test_has_temperature_max(self):
         """It should return temperature data"""
@@ -31,17 +32,6 @@ class ResourcesMeteogramTemperatureTest(TestCase):
     def test_instance(self):
         """It should be an instance of UriManager"""
         self.assertIsInstance(self.obj, UriManager)
-
-    def make_data(self, **kwargs):
-        data = [
-            {'date': '2020-01-01 00:13:00', 'temp': '12'},
-            {'date': '2020-01-01 00:14:00', 'temp': '23'},
-            {'date': '2020-01-01 00:15:00', 'temp': '20'},
-            {'date': '2020-01-02 00:16:00', 'temp': '19'},
-            {'date': '2020-01-02 00:17:00', 'temp': '18'},
-            {'date': '2020-01-02 00:17:00', 'temp': '18'},
-        ]
-        return data
 
 
 class UriManagerTest(TestCase):
@@ -83,23 +73,12 @@ class MeteogramTemperatureGetTest(TestCase):
 
     @mock_api
     def test_temperature_min(self):
-        expected = self.make_data()
+        expected = temperature_min['temp_min']
         resp = self.obj.temperature_min()
         self.assertListEqual(expected, resp['temp_min'])
 
     @mock_api
     def test_temperature_max(self):
-        expected = self.make_data()
+        expected = temperature_max['temp_max']
         resp = self.obj.temperature_max()
         self.assertListEqual(expected, resp['temp_max'])
-
-    def make_data(self, **kwargs):
-        data = [
-            {'date': '2020-01-01 00:13:00', 'temp': '12'},
-            {'date': '2020-01-01 00:14:00', 'temp': '23'},
-            {'date': '2020-01-01 00:15:00', 'temp': '20'},
-            {'date': '2020-01-02 00:16:00', 'temp': '19'},
-            {'date': '2020-01-02 00:17:00', 'temp': '18'},
-            {'date': '2020-01-02 00:17:00', 'temp': '12'},
-        ]
-        return data
