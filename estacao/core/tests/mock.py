@@ -5,6 +5,7 @@ import numpy as np
 from urllib.parse import urljoin
 from os import path
 from django.conf import settings
+from .factories.temperature import temperature_factory, weather_factory
 
 
 def mock_api(fn):
@@ -42,50 +43,27 @@ def mock_uri(resource=''):
     return uri
 
 
+temperature_min = dict(temp_min=temperature_factory(6))
+
+
+temperature_max = dict(temp_max=temperature_factory(6))
+
+
+weather = weather_factory()
+
+
 def fake_api():
     return [
         {
             'uri': mock_uri('temperature_min'),
-            'body': json.dumps({
-                'temp_min':  [
-                    {'date': '2020-01-01 00:13:00', 'temp': '12'},
-                    {'date': '2020-01-01 00:14:00', 'temp': '23'},
-                    {'date': '2020-01-01 00:15:00', 'temp': '20'},
-                    {'date': '2020-01-02 00:16:00', 'temp': '19'},
-                    {'date': '2020-01-02 00:17:00', 'temp': '18'},
-                    {'date': '2020-01-02 00:17:00', 'temp': '12'},
-                ]
-            })
+            'body': json.dumps(temperature_min)
         },
         {
             'uri': mock_uri('temperature_max'),
-            'body': json.dumps({
-                'temp_max':  [
-                    {'date': '2020-01-01 00:13:00', 'temp': '12'},
-                    {'date': '2020-01-01 00:14:00', 'temp': '23'},
-                    {'date': '2020-01-01 00:15:00', 'temp': '20'},
-                    {'date': '2020-01-02 00:16:00', 'temp': '19'},
-                    {'date': '2020-01-02 00:17:00', 'temp': '18'},
-                    {'date': '2020-01-02 00:17:00', 'temp': '12'},
-                ]
-            })
+            'body': json.dumps(temperature_max)
         },
         {
             'uri': getattr(settings, 'API_URL'),
-            'body': json.dumps({
-                        "data": "10/04/2020 - 13:20",
-                        "temperatura_ar": "20",
-                        "temperatura_orvalho": "10",
-                        "ur": "80",
-                        "temperatura_min": "10",
-                        "temperatura_max": "20",
-                        "vento": "calmo",
-                        "pressao": "129",
-                        "visibilidade_min": "4",
-                        "visibilidade_max": "10",
-                        "nuvens_baixas": "Ac/As-10/10",
-                        "nuvens_medias": "Am/As-20/20",
-                        "nuvens_altas": "Am/As-20/20"
-            })
+            'body': json.dumps(weather)
         }
     ]
