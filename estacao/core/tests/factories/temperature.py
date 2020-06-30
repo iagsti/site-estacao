@@ -13,6 +13,22 @@ class TemperatureProvider(BaseProvider):
             temp=fake.random_int(max=40)
         )
 
+    def weather(self):
+        elements = ('Ac/As-10/10', 'Am/As-20/20')
+        return dict(data=str(fake.date_time()),
+                    temperatura_ar=fake.random_int(max=40),
+                    temperatura_orvalho=fake.random_int(max=20),
+                    ur=fake.random_int(max=100),
+                    temperatura_min=fake.random_int(max=30),
+                    temperatura_max=fake.random_int(max=40),
+                    vento=fake.random_int(max=200),
+                    pressao=fake.random_int(max=300),
+                    visibilidade_min=fake.random_int(max=100),
+                    visibilidade_max=fake.random_int(max=100),
+                    nuvens_baixas=fake.random_choices(elements=elements),
+                    nuvens_medias=fake.random_choices(elements=elements),
+                    nuvens_altas=fake.random_choices(elements=elements))
+
 
 def temperature_factory(lenght):
     data = list()
@@ -20,3 +36,8 @@ def temperature_factory(lenght):
     for item in range(lenght):
         data.append(fake.temperature())
     return data
+
+
+def weather_factory():
+    fake.add_provider(TemperatureProvider)
+    return fake.weather()
