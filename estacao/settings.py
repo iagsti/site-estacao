@@ -144,3 +144,4 @@ STATIC_ROOT = 'staticfiles'
 API_URL = config('API_URL')
 API_USER = config('API_USER')
 API_PASWD = config('API_PASWD')
+API_REQUEST_TIMEOUT = config('API_REQUEST_TIMEOUT', cast=float, default=0.5)

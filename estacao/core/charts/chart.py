@@ -10,9 +10,10 @@ from estacao.core.resources import UriManager
 
 
 API_URL = getattr(settings, 'API_URL')
+REQUEST_TIMEOUT = getattr(settings, 'API_REQUEST_TIMEOUT')
 
 
-class TempChart(UriManager, abc.ABC):
+class TempChart(abc.ABC):
     def __init__(self, date_ini=None, date_end=None):
         self.date_ini = date_ini
         self.date_end = date_end
@@ -39,7 +40,8 @@ class TempChart(UriManager, abc.ABC):
             user = getattr(settings, 'API_USER')
             paswd = getattr(settings, 'API_PASWD')
             auth = HTTPBasicAuth(username=user, password=paswd)
-            response = requests.get(self.uri, auth=auth).json()
+            response = requests.get(self.uri, auth=auth,
+                                    timeout=REQUEST_TIMEOUT).json()
         except Exception:
             response = {'tem_min': [{'data': '2020-06-25 13:00:00', 'temp': '0'}]}
         self.temperature_data = response

@@ -5,6 +5,9 @@ from urllib.parse import urljoin
 from django.conf import settings
 
 
+REQUEST_TIMEOUT = getattr(settings, 'API_REQUEST_TIMEOUT')
+
+
 class UriManager:
     def generate_uri(self, step=1, version='v0', resource=''):
         self.make_date_range(step=step)
@@ -28,7 +31,7 @@ class WeatherResource:
 
     def get_weather_data(self):
         try:
-            response = requests.get(self.uri).json()
+            response = requests.get(self.uri, timeout=REQUEST_TIMEOUT).json()
         except Exception:
             response = {
                 "data": "-",
@@ -54,10 +57,10 @@ class MeteogramTemperature(UriManager):
 
     def temperature_min(self):
         uri = self.generate_uri(resource='temperature_min')
-        response = requests.get(uri)
+        response = requests.get(uri, timeout=REQUEST_TIMEOUT)
         return response.json()
 
     def temperature_max(self):
         uri = self.generate_uri(resource='temperature_max')
-        response = requests.get(uri)
+        response = requests.get(uri, timeout=REQUEST_TIMEOUT)
         return response.json()

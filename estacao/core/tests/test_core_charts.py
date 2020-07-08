@@ -82,9 +82,6 @@ class TemperatureTest(TestCase):
         self.temp.make_uri()
         self.assertEqual(expected, self.temp.uri)
 
-    def test_instance_of_uri_manager(self):
-        self.assertIsInstance(self.temp, UriManager)
-
 
 class TemperaturaMaxTest(TestCase):
     def setUp(self):
