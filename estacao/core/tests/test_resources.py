@@ -56,14 +56,14 @@ class UriManagerTest(TestCase):
         self.assertTrue(hasattr(self.obj, 'generate_path'))
 
     def test_generate_path(self):
-        expected = make_path(resource='temperature_min')
+        expected = make_path(resource='temperature-min')
         self.obj.make_date_range()
-        self.obj.generate_path(resource='temperature_min')
+        self.obj.generate_path(resource='temperature-min')
         self.assertEqual(expected, self.obj.path)
 
     def test_generate_uri(self):
-        expected = mock_uri(resource='temperature_min')
-        resp = self.obj.generate_uri(resource='temperature_min')
+        expected = mock_uri(resource='temperature-min')
+        resp = self.obj.generate_uri(resource='temperature-min')
         self.assertEqual(expected, resp)
 
 
