@@ -6,7 +6,7 @@ from estacao.core.tests.mock import mock_api, mock_uri
 from .mock import temperature_min, temperature_max
 
 
-API_URI = mock_uri('temperature_min')
+API_URI = mock_uri('temperatura-min')
 
 
 class TemperatureTest(TestCase):
@@ -95,7 +95,7 @@ class TemperaturaMaxTest(TestCase):
 
     @mock_api
     def test_make_uri(self):
-        expected = mock_uri(resource='temperature_max')
+        expected = mock_uri(resource='temperatura-max')
         self.obj.make_uri()
         self.assertEqual(expected, self.obj.uri)
 

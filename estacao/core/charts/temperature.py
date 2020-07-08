@@ -3,7 +3,7 @@ from estacao.core.charts.chart import TempChart
 
 class Temperature(TempChart):
     def make_uri(self):
-        self.uri = self.generate_uri(resource='temperature_min')
+        self.uri = self.generate_uri(resource='temperatura-min')
 
     def extract_data(self, data):
         try:
@@ -17,7 +17,7 @@ class Temperature(TempChart):
 
 class TemperatureMax(TempChart):
     def make_uri(self):
-        self.uri = self.generate_uri(resource='temperature_max')
+        self.uri = self.generate_uri(resource='temperatura-max')
 
     def extract_data(self, data):
         try:

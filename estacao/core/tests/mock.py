@@ -55,11 +55,11 @@ weather = weather_factory()
 def fake_api():
     return [
         {
-            'uri': mock_uri('temperature_min'),
+            'uri': mock_uri('temperatura-min'),
             'body': json.dumps(temperature_min)
         },
         {
-            'uri': mock_uri('temperature_max'),
+            'uri': mock_uri('temperatura-max'),
             'body': json.dumps(temperature_max)
         },
         {

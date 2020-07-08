@@ -56,11 +56,11 @@ class MeteogramTemperature(UriManager):
         self.uri = settings.API_URL
 
     def temperature_min(self):
-        uri = self.generate_uri(resource='temperature_min')
+        uri = self.generate_uri(resource='temperatura-min')
         response = requests.get(uri, timeout=REQUEST_TIMEOUT)
         return response.json()
 
     def temperature_max(self):
-        uri = self.generate_uri(resource='temperature_max')
+        uri = self.generate_uri(resource='temperatura-max')
         response = requests.get(uri, timeout=REQUEST_TIMEOUT)
         return response.json()
