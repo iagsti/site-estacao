@@ -13,7 +13,7 @@ API_URL = getattr(settings, 'API_URL')
 REQUEST_TIMEOUT = getattr(settings, 'API_REQUEST_TIMEOUT')
 
 
-class TempChart(abc.ABC):
+class TempChart(UriManager, abc.ABC):
     def __init__(self, date_ini=None, date_end=None):
         self.date_ini = date_ini
         self.date_end = date_end
