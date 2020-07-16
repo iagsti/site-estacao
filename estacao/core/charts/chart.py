@@ -21,12 +21,10 @@ class Chart(UriManager, abc.ABC):
             self.date_ini = str(yesterday)
             self.date_end = str(today)
 
-    def plot(self):
+    def handle_data(self):
         self.make_uri()
         self.load_data()
         self.extract_data(self.temperature_data)
-        self.generate_components()
-        self.set_components_attributes()
 
     @abc.abstractmethod
     def make_uri(self):
