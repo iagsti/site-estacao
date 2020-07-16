@@ -1,7 +1,5 @@
-from estacao.core.charts.chart import TempChart
 
 
-class Temperature(TempChart):
     def make_uri(self):
         self.uri = self.generate_uri(resource='temperatura-min')
 
@@ -13,6 +11,7 @@ class Temperature(TempChart):
         except KeyError:
             extracted = {'date': ['2020-06-25 13:00:00'], 'temp_min': ['0']}
         self.extracted_data = extracted
+class Temperature():
 
 
 
