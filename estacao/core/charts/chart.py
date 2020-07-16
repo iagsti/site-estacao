@@ -3,9 +3,6 @@ import numpy as np
 import abc
 from requests.auth import HTTPBasicAuth
 from django.conf import settings
-from bokeh.plotting import figure
-from bokeh.layouts import layout
-from bokeh.embed import components
 from estacao.core.resources import UriManager
 
 
