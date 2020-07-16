@@ -25,6 +25,7 @@ class Chart(UriManager, abc.ABC):
         self.make_uri()
         self.load_data()
         self.extract_data(self.temperature_data)
+        self.to_datetime()
 
     @abc.abstractmethod
     def make_uri(self):
@@ -56,13 +57,12 @@ class Chart(UriManager, abc.ABC):
         script, div = components(plot)
         self.components = {'script': script, 'div': div}
 
-    def to_datetime(self, date_list):
+    def to_datetime(self):
+        date_list = self.extracted_data.get('date')
         datetime_list = []
         for date in date_list:
             date_time = np.datetime64(date)
             datetime_list.append(date_time)
-        return datetime_list
-
     def set_components_attributes(self):
         self.script = self.components.get('script')
         self.div = self.components.get('div')
@@ -72,3 +72,4 @@ class Chart(UriManager, abc.ABC):
 
     def get_div(self):
         return self.div
+        self.extracted_data['date'] = datetime_list
