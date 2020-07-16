@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.conf import settings
-from .mock import mock_uri, temperature_max, mock_api
+from .mock import mock_uri, temperature_max, mock_api, to_datetime
 
 from estacao.core.charts.chart import Chart
 from estacao.core.charts.data import DataTemperature
@@ -42,6 +42,7 @@ class DataTemperatureTest(TestCase):
     def test_handle_data(self):
         data = temperature_max
         date = [item['data'] for item in data['temp_max']]
+        date = to_datetime(date)
         temp = [item['temp'] for item in data['temp_max']]
         expected = dict(date=date, temp_max=temp)
         self.obj.handle_data()
