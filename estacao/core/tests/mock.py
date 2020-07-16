@@ -43,6 +43,14 @@ def mock_uri(resource=''):
     return uri
 
 
+def to_datetime(date_list):
+    datetime_list = []
+    for date in date_list:
+        date_time = np.datetime64(date)
+        datetime_list.append(date_time)
+    return datetime_list
+
+
 temperature_min = dict(temp_min=temperature_factory(6))
 
 
