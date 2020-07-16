@@ -46,17 +46,6 @@ class Chart(UriManager, abc.ABC):
     def extract_data(self, data):
         pass
 
-    def generate_components(self):
-        date = self.to_datetime(self.extracted_data['date'])
-        temperature = self.extracted_data['temp_min']
-        temp_figure = figure(x_axis_type='datetime', plot_height=300,
-                             tools="pan,wheel_zoom,box_zoom,reset")
-        temp_figure.toolbar.logo = None
-        temp_figure.line(date, temperature)
-        plot = layout([temp_figure], sizing_mode='stretch_width')
-        script, div = components(plot)
-        self.components = {'script': script, 'div': div}
-
     def to_datetime(self):
         date_list = self.extracted_data.get('date')
         datetime_list = []
