@@ -1,6 +1,6 @@
 from django.test import TestCase
 from estacao.core.charts.plot import PlotTemperature
-from .mock import temperature_max, temperature_min, mock_api
+from .mock import temperature_max, temperature_min, mock_api, to_datetime
 
 
 class PlotTemperatureTest(TestCase):
@@ -15,10 +15,12 @@ class PlotTemperatureTest(TestCase):
         """It should set data attribute"""
         data_max = temperature_max
         date_max = [item['data'] for item in data_max['temp_max']]
+        date_max = to_datetime(date_max)
         temp_max = [item['temp'] for item in data_max['temp_max']]
 
         data_min = temperature_min
         date_min = [item['data'] for item in data_min['temp_min']]
+        date_min = to_datetime(date_min)
         temp_min = [item['temp'] for item in data_min['temp_min']]
 
         expected = {
@@ -34,6 +36,7 @@ class PlotTemperatureTest(TestCase):
     def test_make_data_source(self):
         data_max = temperature_max
         date = [item['data'] for item in data_max['temp_max']]
+        date = to_datetime(date)
         temp = [item['temp'] for item in data_max['temp_max']]
         expected = {'date': date, 'temp': temp}
         self.obj.load_temperature('temperatura-max', 'temp_max')
