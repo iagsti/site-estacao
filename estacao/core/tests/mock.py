@@ -2,7 +2,10 @@ import httpretty
 import json
 import functools
 import numpy as np
+from urllib.parse import urljoin
+from os import path
 from django.conf import settings
+from .factories.temperature import temperature_factory, weather_factory
 
 
 def mock_api(fn):
@@ -25,46 +28,50 @@ def register_uri():
         )
 
 
-def mock_uri():
+def make_path(resource='', version='v0'):
     today = np.datetime64('today')
     datetime_delta = np.timedelta64(1, 'D')
     yesterday = today - datetime_delta
     date_ini = str(yesterday)
     date_end = str(today)
+    return path.join(version, resource, date_ini, date_end)
+
+
+def mock_uri(resource=''):
     url = getattr(settings, 'API_URL')
-    return '{}/{}/{}/'.format(url, date_ini, date_end)
+    uri = urljoin(url, make_path(resource))
+    return uri
+
+
+def to_datetime(date_list):
+    datetime_list = []
+    for date in date_list:
+        date_time = np.datetime64(date)
+        datetime_list.append(date_time)
+    return datetime_list
+
+
+temperature_min = dict(temp_min=temperature_factory(6))
+
+
+temperature_max = dict(temp_max=temperature_factory(6))
+
+
+weather = weather_factory()
 
 
 def fake_api():
     return [
         {
-            'uri': mock_uri(),
-            'body': json.dumps({
-                'temp_min':  [
-                    {'date': '2020-01-01 00:13:00', 'temp': '12'},
-                    {'date': '2020-01-01 00:14:00', 'temp': '23'},
-                    {'date': '2020-01-01 00:15:00', 'temp': '20'},
-                    {'date': '2020-01-01 00:16:00', 'temp': '19'},
-                    {'date': '2020-01-01 00:17:00', 'temp': '18'},
-                ]
-            })
+            'uri': mock_uri('temperatura-min'),
+            'body': json.dumps(temperature_min)
         },
         {
-            'uri': getattr(settings, 'ESTACAO_API_URI'),
-            'body': json.dumps({
-                        "data": "10/04/2020 - 13:20",
-                        "temperatura_ar": "20",
-                        "temperatura_orvalho": "10",
-                        "ur": "80",
-                        "temperatura_min": "10",
-                        "temperatura_max": "20",
-                        "vento": "calmo",
-                        "pressao": "129",
-                        "visibilidade_min": "4",
-                        "visibilidade_max": "10",
-                        "nuvens_baixas": "Ac/As-10/10",
-                        "nuvens_medias": "Am/As-20/20",
-                        "nuvens_altas": "Am/As-20/20"
-            })
+            'uri': mock_uri('temperatura-max'),
+            'body': json.dumps(temperature_max)
+        },
+        {
+            'uri': getattr(settings, 'API_URL'),
+            'body': json.dumps(weather)
         }
     ]

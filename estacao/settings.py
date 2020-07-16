@@ -123,13 +123,13 @@ USE_L10N = True
 USE_TZ = True
 
 
-#Admin config
+# Admin config
 SITE_HEADER = 'Administração - Estação Meteorológica'
 SITE_TITLE = 'Estação Meteorológica'
 SITE_INDEX_TITLE = 'Estação Meteorológica'
 
 
-#Uploaded Files
+# Uploaded Files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 
@@ -141,8 +141,7 @@ STATIC_ROOT = 'staticfiles'
 
 
 # APIS
-
-ESTACAO_API_URI = config('ESTACAO_API_URI')
 API_URL = config('API_URL')
 API_USER = config('API_USER')
 API_PASWD = config('API_PASWD')
+API_REQUEST_TIMEOUT = config('API_REQUEST_TIMEOUT', cast=float, default=0.5)

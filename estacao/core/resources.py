@@ -1,14 +1,37 @@
-from django.conf import settings
 import requests
+import numpy as np
+from os import path
+from urllib.parse import urljoin
+from django.conf import settings
+
+
+REQUEST_TIMEOUT = getattr(settings, 'API_REQUEST_TIMEOUT')
+
+
+class UriManager:
+    def generate_uri(self, step=1, version='v0', resource=''):
+        self.make_date_range(step=step)
+        self.generate_path(version=version, resource=resource)
+        url = getattr(settings, 'API_URL')
+        return urljoin(url, self.path)
+
+    def generate_path(self, version='v0', resource=''):
+        self.path = path.join(version, resource, self.date_range)
+
+    def make_date_range(self, step=1):
+        today = np.datetime64('today')
+        date_delta = np.timedelta64(step, 'D')
+        yesterday = today - date_delta
+        self.date_range = path.join(str(yesterday), str(today))
 
 
 class WeatherResource:
     def __init__(self):
-        self.uri = settings.ESTACAO_API_URI
+        self.uri = getattr(settings, 'API_URL')
 
     def get_weather_data(self):
         try:
-            response = requests.get(self.uri).json()
+            response = requests.get(self.uri, timeout=REQUEST_TIMEOUT).json()
         except Exception:
             response = {
                 "data": "-",
@@ -28,16 +51,16 @@ class WeatherResource:
         return response
 
 
-class MeteogramTemperature:
+class MeteogramTemperature(UriManager):
     def __init__(self):
-        self.uri = settings.ESTACAO_API_URI
+        self.uri = settings.API_URL
 
     def temperature_min(self):
-        url = self.uri + '/temperature_min'
-        response = requests.get(url)
-        return response
+        uri = self.generate_uri(resource='temperatura-min')
+        response = requests.get(uri, timeout=REQUEST_TIMEOUT)
+        return response.json()
 
     def temperature_max(self):
-        url = self.uri + '/temperature_max'
-        response = requests.get(url)
-        return response
+        uri = self.generate_uri(resource='temperatura-max')
+        response = requests.get(uri, timeout=REQUEST_TIMEOUT)
+        return response.json()
