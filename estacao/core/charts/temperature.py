@@ -19,3 +19,8 @@ class Temperature():
         temp.generate_graph()
         self.graph = temp.graph
 
+    def get_scripts(self):
+        return self.components.get('script')
+
+    def get_div(self):
+        return self.components.get('div')
