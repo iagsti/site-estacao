@@ -52,13 +52,4 @@ class Chart(UriManager, abc.ABC):
         for date in date_list:
             date_time = np.datetime64(date)
             datetime_list.append(date_time)
-    def set_components_attributes(self):
-        self.script = self.components.get('script')
-        self.div = self.components.get('div')
-
-    def get_script(self):
-        return self.script
-
-    def get_div(self):
-        return self.div
         self.extracted_data['date'] = datetime_list
