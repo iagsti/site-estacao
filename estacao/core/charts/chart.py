@@ -39,7 +39,7 @@ class Chart(UriManager, abc.ABC):
             response = requests.get(self.uri, auth=auth,
                                     timeout=REQUEST_TIMEOUT).json()
         except Exception:
-            response = {'tem_min': [{'data': '2020-06-25 13:00:00', 'temp': '0'}]}
+            response = {'temp_min': [{'data': '2020-06-25 13:00:00', 'temp': '0'}]}
         self.temperature_data = response
 
     @abc.abstractmethod
