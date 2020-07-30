@@ -67,6 +67,6 @@ class HomeGetMeteorologicDataTest(TestCase):
 
     def test_render_conditions_data(self):
         """Conditions data should be rendered"""
-        expected = weather
+        expected = weather.get('current')
         conditions = self.resp.context['conditions']
         self.assertDictEqual(expected, conditions)
