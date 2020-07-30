@@ -1,9 +1,9 @@
 from django.test import TestCase
-from estacao.core.resources import MeteogramTemperature
+from estacao.core.resources import MeteogramTemperature, WeatherResource
 from unittest.mock import MagicMock
 from estacao.core.resources import UriManager
 from .mock import (make_path, mock_uri, mock_api,
-                   temperature_max, temperature_min)
+                   temperature_max, temperature_min, weather)
 
 
 class ResourcesMeteogramTemperatureTest(TestCase):
@@ -82,3 +82,20 @@ class MeteogramTemperatureGetTest(TestCase):
         expected = temperature_max['temp_max']
         resp = self.obj.temperature_max()
         self.assertListEqual(expected, resp['temp_max'])
+
+
+class WeatherResourceTest(TestCase):
+    def setUp(self):
+        self.obj = WeatherResource()
+
+    def test_has_uri_attribute(self):
+        self.assertTrue(hasattr(self.obj, 'uri'))
+
+    def test_has_auth_attribute(self):
+        self.assertTrue(hasattr(self.obj, 'auth'))
+
+    @mock_api
+    def test_get_weather_data(self):
+        expected = weather
+        resp = self.obj.get_weather_data()
+        self.assertDictEqual(resp, expected)
