@@ -71,7 +71,7 @@ def fake_api():
             'body': json.dumps(temperature_max)
         },
         {
-            'uri': getattr(settings, 'API_URL'),
+            'uri': getattr(settings, 'API_URL') + '/current-conditions',
             'body': json.dumps(weather)
         }
     ]
