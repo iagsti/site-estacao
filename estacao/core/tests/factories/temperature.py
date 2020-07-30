@@ -17,8 +17,8 @@ class TemperatureProvider(BaseProvider):
         elements = ('Ac/As-10/10', 'Am/As-20/20')
         return dict(data=str(fake.date_time()),
                     temperatura_ar=fake.random_int(max=40),
-                    temperatura_orvalho=fake.random_int(max=20),
-                    ur=fake.random_int(max=100),
+                    temperatura_ponto_orvalho=fake.random_int(max=20),
+                    umidade_relativa=fake.random_int(max=100),
                     temperatura_min=fake.random_int(max=30),
                     temperatura_max=fake.random_int(max=40),
                     vento=fake.random_int(max=200),
