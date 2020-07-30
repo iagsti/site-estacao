@@ -43,8 +43,8 @@ class WeatherResource:
             response = {
                 "data": "-",
                 "temperatura_ar": "-",
-                "temperatura_orvalho": "-",
-                "ur": "-",
+                "temperatura_ponto_orvalho": "-",
+                "umidade_relativa": "-",
                 "temperatura_min": "-",
                 "temperatura_max": "-",
                 "vento": "-",
