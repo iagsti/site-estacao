@@ -25,9 +25,9 @@ class TemperatureProvider(BaseProvider):
                     pressao=fake.random_int(max=300),
                     visibilidade_min=fake.random_int(max=100),
                     visibilidade_max=fake.random_int(max=100),
-                    nuvens_baixas=fake.random_choices(elements=elements),
-                    nuvens_medias=fake.random_choices(elements=elements),
-                    nuvens_altas=fake.random_choices(elements=elements))
+                    nuvens_baixas=fake.random_element(elements=elements),
+                    nuvens_medias=fake.random_element(elements=elements),
+                    nuvens_altas=fake.random_element(elements=elements))
 
 
 def temperature_factory(lenght):
