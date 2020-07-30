@@ -3,6 +3,7 @@ import numpy as np
 from os import path
 from urllib.parse import urljoin
 from django.conf import settings
+from requests.auth import HTTPBasicAuth
 
 
 REQUEST_TIMEOUT = getattr(settings, 'API_REQUEST_TIMEOUT')
@@ -27,11 +28,17 @@ class UriManager:
 
 class WeatherResource:
     def __init__(self):
-        self.uri = getattr(settings, 'API_URL')
+        uri = getattr(settings, 'API_URL')
+        self.uri = urljoin(uri, '/api/v0/current-conditions')
+        user = getattr(settings, 'API_USER')
+        paswd = getattr(settings, 'API_PASWD')
+        self.auth = HTTPBasicAuth(username=user, password=paswd)
 
     def get_weather_data(self):
         try:
-            response = requests.get(self.uri, timeout=REQUEST_TIMEOUT).json()
+            response = requests.get(self.uri, timeout=REQUEST_TIMEOUT,
+                                    auth=self.auth).json()
+
         except Exception:
             response = {
                 "data": "-",
