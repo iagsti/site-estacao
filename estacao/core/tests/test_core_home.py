@@ -53,6 +53,12 @@ class HomeGetTest(TestCase):
             with self.subTest():
                 self.assertContains(self.resp, expected, count)
 
+    def test_weather_data(self):
+        """Template should render weather data"""
+        for expected in weather.get('current').values():
+            with self.subTest():
+                self.assertContains(self.resp, expected)
+
 
 class HomeGetMeteorologicDataTest(TestCase):
     @mock_api
@@ -61,6 +67,6 @@ class HomeGetMeteorologicDataTest(TestCase):
 
     def test_render_conditions_data(self):
         """Conditions data should be rendered"""
-        expected = weather
+        expected = weather.get('current')
         conditions = self.resp.context['conditions']
         self.assertDictEqual(expected, conditions)

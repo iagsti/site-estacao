@@ -7,11 +7,11 @@
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Temperatura do Ponto de Orvalho' %}</small>
-        <small class="badge badge-primary badge-pill">{{ conditions.temperatura_orvalho }}ºC</small>
+        <small class="badge badge-primary badge-pill">{{ conditions.temperatura_ponto_orvalho }}ºC</small>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'UR' %}</small>
-        <small class="badge badge-primary badge-pill">{{ conditions.ur }}</small>
+        <small class="badge badge-primary badge-pill">{{ conditions.umidade_relativa }}</small>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Temperatura Mínima' %}</small>
@@ -37,19 +37,31 @@
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Visibilidade Horizontal' %}</small>
-        <small class="badge badge-primary badge-pill">{{ conditions.visibilidade_min }}km a {{ conditions.visibilidade_max }}km</small>
+        <small class="badge badge-primary badge-pill">{{ conditions.visibilidade }}</small>
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Nuvens Baixas' %}</small>
-        <small class="badge badge-primary badge-pill">{{ conditions.nuvens_baixas }}</small>
+        {% if conditions.nuvens_baixas %}
+            <small class="badge badge-primary badge-pill">
+                {{ conditions.nuvens_baixas }} - {{ conditions.quant_nuvens_baixas }}/10
+            </small>
+        {% endif %}
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Nuvens Médias' %}</small>
-        <small class="badge badge-primary badge-pill">{{ conditions.nuvens_medias }}</small>
+        {% if conditions.nuvens_medias %}
+            <small class="badge badge-primary badge-pill">
+                {{ conditions.nuvens_medias }} - {{ conditions.quant_nuvens_medias }}/10
+            </small>
+        {% endif %}
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Nuvens Altas' %}</small>
-        <small class="badge badge-primary badge-pill">{{ conditions.nuvens_altas }}</small>
+        {% if conditions.nuvens_altas %}
+            <small class="badge badge-primary badge-pill">
+                {{ conditions.nuvens_altas }} - {{ conditions.quant_nuvens_altas }}/10
+            </small>
+        {% endif %}
     </li>
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <small>{% trans 'Fenômenos Diversos' %}</small>

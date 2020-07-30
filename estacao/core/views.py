@@ -18,7 +18,7 @@ def home(request):
 def get_weather_data():
     weather = WeatherResource()
     weather_data = weather.get_weather_data()
-    return weather_data
+    return weather_data.get('current')
 
 
 def render_temperature_chart():
