@@ -1,4 +1,5 @@
 from bokeh.plotting import figure
+from bokeh.transform import dodge
 
 
 class TemperatureGraphs:
@@ -30,3 +31,24 @@ class TemperatureGraphs:
                 source=line.get('source')
             )
             self.plot.legend.location = 'top_right'
+
+
+class BarGraph:
+    def __init__(self, **kwargs):
+        self.x = kwargs.get('x')
+        self.top = kwargs.get('top')
+        self.width = kwargs.get('width')
+        self.color = kwargs.get('color')
+        self.label = kwargs.get('label')
+        self.gutter = kwargs.get('bar_gutter')
+        self.source = kwargs.get('source')
+        self.plot = kwargs.get('plot')
+
+    def get_bar(self):
+        self.set_bar()
+        return self.plot
+
+    def set_bar(self):
+        self.plot.vbar(x=dodge(self.x, self.gutter, range=self.plot.x_range),
+                       top=self.top, width=self.width, source=self.source,
+                       color=self.color, legend_label=self.label)
