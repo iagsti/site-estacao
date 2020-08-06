@@ -24,6 +24,24 @@ class Temperature():
         temp.generate_graph()
         self.graph = temp.graph
 
+    def make_line(self, x, y, line_color, legend):
+        line_settings = dict(x=x, y=y, line_color=line_color,
+                             legend=legend, plot=self.temp_plot,
+                             source=self.temperature_plot.data_source)
+
+        plot = LineGraph(**line_settings).get_line()
+        setattr(self, 'temp_plot', plot)
+
+    def make_vbar(self, x, top, color, label, gutter):
+        temperature_plot = TemperaturePlot()
+        plot = temperature_plot.get_plot()
+
+        vbar_settings = dict(x=x, top=top, color=color, plot=self.temp_plot,
+                             width=0.2, bar_gutter=gutter, label=label,
+                             source=self.temperature_plot.data_source)
+        plot = BarGraph(**vbar_settings).get_bar()
+        setattr(self, 'temp_plot', plot)
+
     def get_scripts(self):
         return self.components.get('script')
 
