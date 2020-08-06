@@ -6,6 +6,10 @@ from .graphs import LineGraph, BarGraph
 
 
 class Temperature():
+    def __init__(self):
+        self.temperature_plot = TemperaturePlot()
+        self.temp_plot = self.temperature_plot.get_plot()
+
     def plot(self):
         self.make_plots()
         self.make_components()
