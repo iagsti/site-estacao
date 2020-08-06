@@ -15,14 +15,19 @@ class Temperature():
         self.make_components()
 
     def make_components(self):
-        plot = layout([self.graph], sizing_mode='stretch_width')
+        plot = layout([self.temp_plot], sizing_mode='stretch_width')
         script, div = components(plot)
         self.components = {'script': script, 'div': div}
 
     def make_plots(self):
-        temp = PlotTemperature()
-        temp.generate_graph()
-        self.graph = temp.graph
+        self.make_line(x='date_min', y='temp_min', line_color='blue',
+                       legend='Temperatura mínima')
+        self.make_line(x='date_max', y='temp_max', line_color='red',
+                       legend='Temperatura máxima')
+        self.make_vbar(x='date_min', top='temp_min', color='blue',
+                       label='Temperatura mínima', gutter=-0.15)
+        self.make_vbar(x='date_max', top='temp_max', color='red',
+                       label='Temperatura máxima', gutter=0.15)
 
     def make_line(self, x, y, line_color, legend):
         line_settings = dict(x=x, y=y, line_color=line_color,
