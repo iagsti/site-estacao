@@ -18,5 +18,13 @@ class TemperaturePlot():
         self.set_plot()
         return self.plot
 
+    def load_temperature_data(self):
+        t_min = DataTemperature('temperatura-min', 'temp_min')
+        t_max = DataTemperature('temperatura-max', 'temp_max')
+        t_min.handle_data()
+        t_max.handle_data()
+        self.data = {
+            'temp_min': t_min.extracted_data,
+            'temp_max': t_max.extracted_data
         }
 
