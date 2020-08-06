@@ -28,3 +28,13 @@ class TemperaturePlot():
             'temp_max': t_max.extracted_data
         }
 
+    def set_data_source(self):
+        data = getattr(self, 'data')
+        source = {
+            'date_min': data.get('temp_min').get('date'),
+            'temp_min': data.get('temp_min').get('temp_min'),
+            'date_max': data.get('temp_max').get('date'),
+            'temp_max': data.get('temp_max').get('temp_max')
+        }
+        self.data_source = ColumnDataSource(data=source)
+
