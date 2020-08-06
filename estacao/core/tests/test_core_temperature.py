@@ -1,7 +1,8 @@
 from django.test import TestCase
-from estacao.core.charts.temperature import Temperature
 from bokeh.plotting import Figure
+
 from .mock import mock_api
+from estacao.core.charts.temperature import Temperature
 
 
 class TemperatureCoreTest(TestCase):
@@ -15,7 +16,7 @@ class TemperatureCoreTest(TestCase):
     def test_make_plots(self):
         """It should make temp_min and temp_max plots"""
         self.obj.make_plots()
-        self.assertIsInstance(self.obj.graph, Figure)
+        self.assertIsInstance(self.obj.temp_plot, Figure)
 
     @mock_api
     def test_make_components(self):
