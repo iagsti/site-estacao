@@ -52,3 +52,7 @@ class TemperatureCoreTest(TestCase):
                            line_color='blue', legend='Tem min')
         self.assertIsInstance(self.obj.temp_plot, Figure)
 
+    def test_make_vbar_graph(self):
+        self.obj.make_vbar(x='date_min', top='temp_max',
+                           color='red', label='Tem max', gutter=-0.15)
+        self.assertIsInstance(self.obj.temp_plot, Figure)
