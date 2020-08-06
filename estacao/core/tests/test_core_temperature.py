@@ -46,3 +46,9 @@ class TemperatureCoreTest(TestCase):
         """It should return the component div"""
         self.obj.plot()
         self.assertIn('<div class="bk-root"', self.obj.get_div())
+
+    def test_make_line_graph(self):
+        self.obj.make_line(x='date_min', y='temp_min',
+                           line_color='blue', legend='Tem min')
+        self.assertIsInstance(self.obj.temp_plot, Figure)
+
