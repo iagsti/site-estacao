@@ -1,7 +1,8 @@
 from bokeh.layouts import layout
 from bokeh.embed import components
 
-from .plot import PlotTemperature
+from .plot import TemperaturePlot
+from .graphs import LineGraph, BarGraph
 
 
 class Temperature():
