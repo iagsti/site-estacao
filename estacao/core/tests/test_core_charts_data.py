@@ -42,7 +42,6 @@ class DataTemperatureTest(TestCase):
     def test_handle_data(self):
         data = temperature_max
         date = [item['data'] for item in data['temp_max']]
-        date = to_datetime(date)
         temp = [item['temp'] for item in data['temp_max']]
         expected = dict(date=date, temp_max=temp)
         self.obj.handle_data()
