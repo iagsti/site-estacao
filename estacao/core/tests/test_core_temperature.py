@@ -1,7 +1,8 @@
 from django.test import TestCase
-from estacao.core.charts.temperature import Temperature
 from bokeh.plotting import Figure
+
 from .mock import mock_api
+from estacao.core.charts.temperature import Temperature
 
 
 class TemperatureCoreTest(TestCase):
@@ -15,7 +16,7 @@ class TemperatureCoreTest(TestCase):
     def test_make_plots(self):
         """It should make temp_min and temp_max plots"""
         self.obj.make_plots()
-        self.assertIsInstance(self.obj.graph, Figure)
+        self.assertIsInstance(self.obj.temp_plot, Figure)
 
     @mock_api
     def test_make_components(self):
@@ -45,3 +46,13 @@ class TemperatureCoreTest(TestCase):
         """It should return the component div"""
         self.obj.plot()
         self.assertIn('<div class="bk-root"', self.obj.get_div())
+
+    def test_make_line_graph(self):
+        self.obj.make_line(x='date_min', y='temp_min',
+                           line_color='blue', legend='Tem min')
+        self.assertIsInstance(self.obj.temp_plot, Figure)
+
+    def test_make_vbar_graph(self):
+        self.obj.make_vbar(x='date_min', top='temp_max',
+                           color='red', label='Tem max', gutter=-0.15)
+        self.assertIsInstance(self.obj.temp_plot, Figure)

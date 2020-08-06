@@ -51,8 +51,13 @@ def to_datetime(date_list):
     return datetime_list
 
 
-temperature_min = dict(temp_min=temperature_factory(6))
+def date_tostr(date_list):
+    date_format = '%Y-%m-%d %H:%M:%S'
+    str_date = [item.strftime(date_format) for item in date_list]
+    return str_date
 
+
+temperature_min = dict(temp_min=temperature_factory(6))
 
 temperature_max = dict(temp_max=temperature_factory(6))
 

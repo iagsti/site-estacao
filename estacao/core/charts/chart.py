@@ -25,7 +25,6 @@ class Chart(UriManager, abc.ABC):
         self.make_uri()
         self.load_data()
         self.extract_data(self.temperature_data)
-        self.to_datetime()
 
     @abc.abstractmethod
     def make_uri(self):
@@ -45,11 +44,3 @@ class Chart(UriManager, abc.ABC):
     @abc.abstractmethod
     def extract_data(self, data):
         pass
-
-    def to_datetime(self):
-        date_list = self.extracted_data.get('date')
-        datetime_list = []
-        for date in date_list:
-            date_time = np.datetime64(date)
-            datetime_list.append(date_time)
-        self.extracted_data['date'] = datetime_list
