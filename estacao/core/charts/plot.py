@@ -48,3 +48,26 @@ class TemperaturePlot():
         tools = HoverTool(tooltips=t, formatters=formatters)
         setattr(self, 'tools', tools)
 
+    def set_plot(self):
+        data = getattr(self, 'data')
+
+        date_min = data.get('temp_min').get('date')
+        date_max = data.get('temp_max').get('date')
+        x_range = list(set(date_min + date_max))
+        x_range.sort()
+        title = PLOT_TITLE
+        height = PLOT_HEIGHT
+
+        plot = figure(x_range=x_range, title=title, plot_height=height)
+
+        plot.xaxis.axis_label = X_AXIS_LABEL
+        plot.yaxis.axis_label = Y_AXIS_LABEL
+        plot.toolbar.logo = None
+        tick_format = dict(hours=TICK_FORMAT,
+                           days=TICK_FORMAT,
+                           months=TICK_FORMAT,
+                           years=TICK_FORMAT)
+
+        plot.xaxis.formatter = DatetimeTickFormatter(**tick_format)
+        plot.add_tools(getattr(self, 'tools'))
+        setattr(self, 'plot', plot)
