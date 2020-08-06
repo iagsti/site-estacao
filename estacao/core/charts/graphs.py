@@ -1,36 +1,22 @@
-from bokeh.plotting import figure
 from bokeh.transform import dodge
 
 
-class TemperatureGraphs:
-    def __init__(self, line_settings=[], legend='', **kwargs):
-        self.line_settings = line_settings
-        self.legend = legend
-        self.params = kwargs
+class LineGraph:
+    def __init__(self, **kwargs):
+        self.x = kwargs.get('x')
+        self.y = kwargs.get('y')
+        self.line_color = kwargs.get('line_color')
+        self.plot = kwargs.get('plot')
+        self.source = kwargs.get('source')
+        self.legend = kwargs.get('legend')
 
-    def get_graph(self):
-        self.set_figure()
+    def get_line(self):
         self.set_line()
         return self.plot
 
-    def set_figure(self):
-        plot = figure(title=self.params.get('title'), x_axis_type='datetime',
-                      plot_height=300, tools="pan,wheel_zoom,box_zoom,reset")
-        plot.xaxis.axis_label = self.params.get('xlabel')
-        plot.yaxis.axis_label = self.params.get('ylabel')
-        plot.toolbar.logo = None
-        self.plot = plot
-
     def set_line(self):
-        for line in self.line_settings:
-            self.plot.line(
-                x=line.get('x'),
-                y=line.get('y'),
-                line_color=line.get('line_color'),
-                legend_label=line.get('legend'),
-                source=line.get('source')
-            )
-            self.plot.legend.location = 'top_right'
+        self.plot.line(x=self.x, y=self.y, line_color=self.line_color,
+                       legend_label=self.legend, source=self.source)
 
 
 class BarGraph:
