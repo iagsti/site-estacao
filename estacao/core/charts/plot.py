@@ -38,3 +38,13 @@ class TemperaturePlot():
         }
         self.data_source = ColumnDataSource(data=source)
 
+    def set_tools(self):
+        t = [
+            ('Temperatura mínima', '@temp_min'),
+            ('Temperatura máxima', '@temp_max'),
+            ('Data', '@date_max{%d/%m/%Y %H:%M}'),
+        ]
+        formatters = {'@date_max': 'datetime'}
+        tools = HoverTool(tooltips=t, formatters=formatters)
+        setattr(self, 'tools', tools)
+
