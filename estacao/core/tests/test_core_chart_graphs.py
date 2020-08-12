@@ -40,7 +40,7 @@ class BarGraphTest(TestCase):
         source = ColumnDataSource({'x': [], 'top': []})
         bar_settings = dict(x='x', top='y', color='red', width=10,
                             gutter=-0.15, label='Temp min',
-                            plot=figure(), source=source)
+                            name='tmin', plot=figure(), source=source)
         self.obj = BarGraph(**bar_settings)
 
     def test_constructor_attributes(self):
@@ -55,3 +55,8 @@ class BarGraphTest(TestCase):
         self.obj.set_bar()
         resp = self.obj.get_bar()
         self.assertIsInstance(resp, Figure)
+
+    def test_glyph_name(self):
+        plot = self.obj.get_bar()
+        glyph = plot.select(name='tmin')
+        self.assertEqual('tmin', glyph.name)

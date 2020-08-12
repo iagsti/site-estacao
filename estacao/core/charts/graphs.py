@@ -31,6 +31,7 @@ class BarGraph:
         self.gutter = kwargs.get('bar_gutter')
         self.source = kwargs.get('source')
         self.plot = kwargs.get('plot')
+        self.name = kwargs.get('name')
 
     def get_bar(self):
         self.set_bar()
@@ -39,4 +40,5 @@ class BarGraph:
     def set_bar(self):
         self.plot.vbar(x=dodge(self.x, self.gutter, range=self.plot.x_range),
                        top=self.top, width=self.width, source=self.source,
-                       color=self.color, legend_label=self.label)
+                       name=self.name, color=self.color,
+                       legend_label=self.label)
