@@ -97,6 +97,7 @@ class TemperaturePlot():
         plot = figure(x_range=x_range, title=title, plot_height=height)
 
         plot.xaxis.axis_label = X_AXIS_LABEL
+        plot.xaxis.major_label_orientation = pi/3.8
         plot.yaxis.axis_label = Y_AXIS_LABEL
         plot.toolbar.logo = None
         tick_format = dict(hours=TICK_FORMAT,
