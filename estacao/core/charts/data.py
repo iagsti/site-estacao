@@ -21,3 +21,14 @@ class DataTemperature(Chart):
             temp = [0]
             extracted = {'date': date, self.data_index: temp}
         self.extracted_data = extracted
+
+
+class DataConsolidado(DataTemperature):
+    def extract_data(self, data):
+        try:
+            key = self.data_index
+            extracted = [row.get(key) for row in data.get('consolidado')]
+        except Exception:
+            data = {'consolidado': [{'tseco': 0, 'data': '2020-01-01 00:00:00'}]}
+            extracted = [row.get(key) for row in data.get('consolidado')]
+        self.extracted_data = extracted
