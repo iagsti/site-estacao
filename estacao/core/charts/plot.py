@@ -28,6 +28,17 @@ class TemperaturePlot():
             'temp_max': t_max.extracted_data
         }
 
+    def load_tseco_data(self):
+        date = DataConsolidado('consolidado', 'data')
+        date.handle_data()
+        tseco = DataConsolidado('consolidado', 'tseco')
+        tseco.handle_data()
+        tseco_data = {
+            'date': date.extracted_data,
+            'tseco': tseco.extracted_data
+        }
+        setattr(self, 'tseco_data', tseco_data)
+
     def set_data_source(self):
         data = getattr(self, 'data')
         source = {
