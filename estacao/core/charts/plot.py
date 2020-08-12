@@ -15,9 +15,10 @@ TICK_FORMAT = ['%d/%m/%Y %H:%M:%S']
 class TemperaturePlot():
     def get_plot(self):
         self.load_temperature_data()
+        self.load_tseco_data()
         self.set_data_source()
-        self.set_tools()
         self.set_plot()
+        self.set_tools()
         return self.plot
 
     def load_temperature_data(self):
