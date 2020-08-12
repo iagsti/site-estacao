@@ -9,7 +9,7 @@ from estacao.core.charts.graphs import LineGraph, BarGraph
 class LineGraphTest(TestCase):
     def setUp(self):
         source = ColumnDataSource({'x': [], 'y': []})
-        line_settings = dict(x='x', y='y', line_color='red',
+        line_settings = dict(x='x', y='y', line_color='red', name='tmin',
                              legend='Temp min', plot=figure(), source=source)
         self.obj = LineGraph(**line_settings)
 
@@ -28,6 +28,11 @@ class LineGraphTest(TestCase):
         self.obj.set_line()
         resp = self.obj.get_line()
         self.assertIsInstance(resp, Figure)
+
+    def test_glyph_name(self):
+        plot = self.obj.get_line()
+        glyph = plot.select(name='tmin')
+        self.assertEqual('tmin', glyph.name)
 
 
 class BarGraphTest(TestCase):
