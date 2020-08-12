@@ -9,6 +9,7 @@ class LineGraph:
         self.plot = kwargs.get('plot')
         self.source = kwargs.get('source')
         self.legend = kwargs.get('legend')
+        self.name = kwargs.get('name')
 
     def get_line(self):
         self.set_line()
@@ -16,7 +17,8 @@ class LineGraph:
 
     def set_line(self):
         self.plot.line(x=self.x, y=self.y, line_color=self.line_color,
-                       legend_label=self.legend, source=self.source)
+                       name=self.name, legend_label=self.legend,
+                       source=self.source)
 
 
 class BarGraph:
@@ -29,6 +31,7 @@ class BarGraph:
         self.gutter = kwargs.get('bar_gutter')
         self.source = kwargs.get('source')
         self.plot = kwargs.get('plot')
+        self.name = kwargs.get('name')
 
     def get_bar(self):
         self.set_bar()
@@ -37,4 +40,5 @@ class BarGraph:
     def set_bar(self):
         self.plot.vbar(x=dodge(self.x, self.gutter, range=self.plot.x_range),
                        top=self.top, width=self.width, source=self.source,
-                       color=self.color, legend_label=self.label)
+                       name=self.name, color=self.color,
+                       legend_label=self.label)

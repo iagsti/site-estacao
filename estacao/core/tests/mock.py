@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 from os import path
 from django.conf import settings
 from .factories.temperature import temperature_factory, weather_factory
+from .factories.consolidado import consolidado_factory
 
 
 def mock_api(fn):
@@ -61,6 +62,7 @@ temperature_min = dict(temp_min=temperature_factory(6))
 
 temperature_max = dict(temp_max=temperature_factory(6))
 
+consolidado = dict(consolidado=consolidado_factory(6))
 
 weather = weather_factory()
 
@@ -78,5 +80,9 @@ def fake_api():
         {
             'uri': getattr(settings, 'API_URL') + '/current-conditions',
             'body': json.dumps(weather)
+        },
+        {
+            'uri': mock_uri('consolidado'),
+            'body': json.dumps(consolidado)
         }
     ]

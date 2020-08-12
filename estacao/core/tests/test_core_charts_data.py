@@ -1,9 +1,9 @@
 from django.test import TestCase
 from django.conf import settings
-from .mock import mock_uri, temperature_max, mock_api, to_datetime
+from .mock import mock_uri, temperature_max, mock_api, consolidado
 
 from estacao.core.charts.chart import Chart
-from estacao.core.charts.data import DataTemperature
+from estacao.core.charts.data import DataTemperature, DataConsolidado
 
 
 API_URL = getattr(settings, 'API_URL')
@@ -50,3 +50,41 @@ class DataTemperatureTest(TestCase):
     def test_has_generate_graph_attribute(self):
         """It should have generate_graph attribute"""
         self.assertTrue(self.obj, 'generate_graph')
+
+
+class DataConsolidadoTest(TestCase):
+    def setUp(self):
+        self.obj = DataConsolidado(resource='consolidado', data_index='tseco')
+
+    def test_is_instance_of_chart(self):
+        self.assertIsInstance(self.obj, Chart)
+
+    def test_has_initialized_attributes(self):
+        self.assertTrue(hasattr(self.obj, 'resource'))
+
+    def test_has_uri_attribute(self):
+        self.obj.make_uri()
+        self.assertTrue(hasattr(self.obj, 'uri'))
+
+    def test_make_uri(self):
+        expected = mock_uri(resource='consolidado')
+        self.obj.make_uri()
+        self.assertEqual(self.obj.uri, expected)
+
+    def test_tseco_not_found(self):
+        self.obj.handle_data()
+        expected = [0]
+        self.assertListEqual(expected, self.obj.extracted_data)
+
+    def test_date_tseco_not_found(self):
+        self.obj.data_index = 'data'
+        self.obj.handle_data()
+        expected = ['2020-01-01 00:00:00']
+        self.assertListEqual(expected, self.obj.extracted_data)
+
+    @mock_api
+    def test_extract_data(self):
+        data = consolidado
+        expected = [row.get('tseco') for row in data.get('consolidado')]
+        self.obj.handle_data()
+        self.assertListEqual(expected, self.obj.extracted_data)
