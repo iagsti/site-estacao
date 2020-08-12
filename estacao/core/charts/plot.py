@@ -83,10 +83,12 @@ class TemperaturePlot():
 
     def set_plot(self):
         data = getattr(self, 'data')
+        tseco_data = getattr(self, 'tseco_data')
 
         date_min = data.get('temp_min').get('date')
         date_max = data.get('temp_max').get('date')
-        x_range = list(set(date_min + date_max))
+        date_tseco = tseco_data.get('date')
+        x_range = list(set(date_min + date_max + date_tseco))
         x_range.sort()
         title = PLOT_TITLE
         height = PLOT_HEIGHT
