@@ -1,10 +1,12 @@
+from math import pi
 from bokeh.plotting import figure
-from bokeh.models import ColumnDataSource, HoverTool, DatetimeTickFormatter
+from bokeh.models import ColumnDataSource, DatetimeTickFormatter
 
-from .data import DataTemperature
+from .data import DataTemperature, DataConsolidado
+from .hovertool import ChartHoverTool
 
 PLOT_TITLE = 'Temperatura'
-PLOT_HEIGHT = 300
+PLOT_HEIGHT = 400
 X_AXIS_LABEL = 'Data'
 Y_AXIS_LABEL = 'Temperatura'
 TICK_FORMAT = ['%d/%m/%Y %H:%M:%S']
@@ -41,11 +43,24 @@ class TemperaturePlot():
 
     def set_data_source(self):
         data = getattr(self, 'data')
-        source = {
+        temp_min = ColumnDataSource({
             'date_min': data.get('temp_min').get('date'),
-            'temp_min': data.get('temp_min').get('temp_min'),
+            'temp_min': data.get('temp_min').get('temp_min')
+        })
+
+        temp_max = ColumnDataSource({
             'date_max': data.get('temp_max').get('date'),
-            'temp_max': data.get('temp_max').get('temp_max')
+            'temp_max': data.get('temp_max').get('temp_max'),
+        })
+
+        tseco = ColumnDataSource({
+            'date_tseco': self.tseco_data.get('date'),
+            'tseco': self.tseco_data.get('tseco')
+        })
+
+        self.data_sources = {
+            'temp_min': temp_min, 'temp_max': temp_max,
+            'tseco': tseco
         }
         self.data_source = ColumnDataSource(data=source)
 
