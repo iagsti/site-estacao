@@ -62,17 +62,24 @@ class TemperaturePlot():
             'temp_min': temp_min, 'temp_max': temp_max,
             'tseco': tseco
         }
-        self.data_source = ColumnDataSource(data=source)
 
     def set_tools(self):
-        t = [
+        tmin = [
             ('Temperatura mínima', '@temp_min'),
-            ('Temperatura máxima', '@temp_max'),
-            ('Data', '@date_max{%d/%m/%Y %H:%M}'),
+            ('Data', '@date_min{%d/%m/%Y %H:%M}')
         ]
-        formatters = {'@date_max': 'datetime'}
-        tools = HoverTool(tooltips=t, formatters=formatters)
-        setattr(self, 'tools', tools)
+        tmax = [
+            ('Temperatura máxima', '@temp_max'),
+            ('Data', '@date_max{%d/%m/%Y %H:%M}')
+        ]
+        tseco = [
+            ('Temp bulbo seco', '@tseco'),
+            ('Data', '@date_tseco{%d/%m/%Y %H:%M}')
+        ]
+        tooltips = {'tmin': tmin, 'tmax': tmax, 'tseco': tseco}
+        chart_tools = ChartHoverTool(plot=getattr(self, 'plot'),
+                                     tooltips=tooltips)
+        chart_tools.add_hovertools()
 
     def set_plot(self):
         data = getattr(self, 'data')
