@@ -77,9 +77,15 @@ class TemperaturePlot():
             ('Temp bulbo seco', '@tseco'),
             ('Data', '@date_tseco{%d/%m/%Y %H:%M}')
         ]
+        formatters = {
+            'tmin': {'@date_min': 'datetime'},
+            'tmax': {'@date_max': 'datetime'},
+            'tseco': {'@date_tseco': 'datetime'}
+        }
         tooltips = {'tmin': tmin, 'tmax': tmax, 'tseco': tseco}
         chart_tools = ChartHoverTool(plot=getattr(self, 'plot'),
-                                     tooltips=tooltips)
+                                     tooltips=tooltips,
+                                     formatters=formatters)
         chart_tools.add_hovertools()
 
     def set_plot(self):
