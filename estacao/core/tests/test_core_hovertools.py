@@ -7,8 +7,10 @@ from estacao.core.charts.hovertool import ChartHoverTool
 class ChartHoverToolTest(TestCase):
     def setUp(self):
         tooltips = {'tmin': [], 'tmax': [], 'tseco': []}
+        formatters = {'tmin': {}, 'tmax': {}, 'tseco': {}}
         self.plot = Figure()
-        self.obj = ChartHoverTool(plot=self.plot, tooltips=tooltips)
+        self.obj = ChartHoverTool(plot=self.plot, tooltips=tooltips,
+                                  formatters=formatters)
 
     def test_has_plot_attribute(self):
         self.assertTrue(hasattr(self.obj, 'plot'))
