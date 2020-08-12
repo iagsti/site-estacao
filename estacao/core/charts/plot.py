@@ -104,5 +104,4 @@ class TemperaturePlot():
                            years=TICK_FORMAT)
 
         plot.xaxis.formatter = DatetimeTickFormatter(**tick_format)
-        plot.add_tools(getattr(self, 'tools'))
         setattr(self, 'plot', plot)
