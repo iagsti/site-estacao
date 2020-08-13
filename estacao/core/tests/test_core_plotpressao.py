@@ -28,6 +28,14 @@ class PressaoPlotTest(TestCase):
         self.assertDictEqual(pressao_hpa,
                              self.obj.datasource.get('pressao_hpa').data)
 
+    def test_set_plot_instance(self):
+        self.obj.load_data()
+        self.obj.set_data_source()
+        self.obj.set_plot()
+
+        self.assertIsInstance(self.obj.plot, Figure)
+
+
     def mock_data(self):
         data = consolidado
         date = [row.get('data') for row in data.get('consolidado')]
