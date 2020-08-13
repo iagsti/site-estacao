@@ -52,3 +52,10 @@ class PressaoTest(TestCase):
         self.obj.make_plots()
         self.obj.make_components()
         self.assertIn('BokehJS', self.obj.get_scripts())
+
+    @mock_api
+    def test_plot(self):
+        self.obj.plot_graph()
+        expected = ('script', 'div')
+        actual = tuple(self.obj.components.keys())
+        self.assertTupleEqual(expected, actual)
