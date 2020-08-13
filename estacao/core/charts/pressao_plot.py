@@ -1,8 +1,9 @@
-from bokeh.models import ColumnDataSource, DatetimeTickFormatter
+from bokeh.models import ColumnDataSource, DatetimeTickFormatter, HoverTool
 from bokeh.plotting import figure
 from math import pi
 
 from .data import DataConsolidado
+from .hovertool import ChartHoverTool
 
 PLOT_HEIGHT = 400
 TICK_FORMAT = ['%d/%m/%Y %H:%M:%S']
@@ -16,6 +17,7 @@ class PressaoPlot:
         self.load_data()
         self.set_data_source()
         self.set_plot()
+        self.set_tools()
 
     def load_data(self):
         date = DataConsolidado('consolidado', 'data')
@@ -64,3 +66,23 @@ class PressaoPlot:
         plot.xaxis.formatter = DatetimeTickFormatter(**tick_format)
 
         setattr(self, 'plot', plot)
+
+    def set_tools(self):
+        formatter = {
+            'pressao': {'@date_min': 'datetime'},
+            'pressao_hpa': {'@date_max': 'datetime'},
+        }
+        pressao = [
+            ('Pressão', '@pressao'),
+            ('Data', '@date{%d/%m/%Y %H:%M}')
+        ]
+        pressao_hpa = [
+            ('Pressão hpa', '@pressao_hpa'),
+            ('Data', '@date{%d/%m/%Y %H:%M}')
+        ]
+        tooltips = {'pressao': pressao, 'pressao_hpa': pressao_hpa}
+
+        chart_tools = ChartHoverTool(plot=getattr(self, 'plot'),
+                                     tooltips=tooltips,
+                                     formatters=formatter)
+        chart_tools.add_hovertools()
