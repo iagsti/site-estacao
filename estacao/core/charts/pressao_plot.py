@@ -47,7 +47,9 @@ class PressaoPlot:
 
     def set_plot(self):
         data = getattr(self, 'data')
+
         x_range = data.get('date')
+        x_range.sort()
 
         plot = figure(x_range=x_range,
                       title='Pressão', plot_height=PLOT_HEIGHT)
