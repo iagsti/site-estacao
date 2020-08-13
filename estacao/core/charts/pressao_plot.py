@@ -31,3 +31,25 @@ class PressaoPlot:
                       'pressao_hpa': source_pressao_hpa}
 
         setattr(self, 'datasource', datasource)
+
+    def set_plot(self):
+        data = getattr(self, 'data')
+        x_range = data.get('date')
+
+        plot = figure(x_range=x_range,
+                      title='Pressão', plot_height=PLOT_HEIGHT)
+
+        plot.xaxis.axis_label = 'Data'
+        plot.yaxis.axis_label = 'Pressão Atmosférica(mmHg)'
+        plot.xaxis.major_label_orientation = pi/3.8
+
+        plot.toolbar.logo = None
+
+        tick_format = dict(hours=TICK_FORMAT,
+                           days=TICK_FORMAT,
+                           months=TICK_FORMAT,
+                           years=TICK_FORMAT)
+
+        plot.xaxis.formatter = DatetimeTickFormatter(**tick_format)
+
+        setattr(self, 'plot', plot)
