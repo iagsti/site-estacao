@@ -21,3 +21,6 @@ class ViewCoreTest(TestCase):
     def test_context_has_weather_data(self):
         """Context should have conditions data"""
         self.assertIn('conditions', self.resp.context)
+
+    def test_context_has_pressao_data(self):
+        self.assertIn('pressao', self.resp.context)
