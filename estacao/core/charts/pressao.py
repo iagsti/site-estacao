@@ -11,6 +11,10 @@ class Pressao:
         self.pressao_plot.plot()
         self.plot = self.pressao_plot.plot
 
+    def plot(self):
+        self.make_plots()
+        self.make_components()
+
     def make_plots(self):
         source = self.pressao_plot.datasource
 
