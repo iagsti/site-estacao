@@ -14,6 +14,20 @@ class PressaoPlotTest(TestCase):
         self.obj.load_data()
         self.assertEqual(expected, self.obj.data)
 
+    @mock_api
+    def test_set_data_source(self):
+        data = self.mock_data()
+        pressao = {'date': data.get('date'),
+                   'pressao': data.get('pressao')}
+        pressao_hpa = {'date': data.get('date'),
+                       'pressao_hpa': data.get('pressao_hpa')}
+
+        self.obj.load_data()
+        self.obj.set_data_source()
+        self.assertDictEqual(pressao, self.obj.datasource.get('pressao').data)
+        self.assertDictEqual(pressao_hpa,
+                             self.obj.datasource.get('pressao_hpa').data)
+
     def mock_data(self):
         data = consolidado
         date = [row.get('data') for row in data.get('consolidado')]
