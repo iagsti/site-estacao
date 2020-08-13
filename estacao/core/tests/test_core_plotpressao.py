@@ -1,4 +1,6 @@
 from django.test import TestCase
+from bokeh.plotting import Figure
+from math import pi
 
 from .mock import mock_api, consolidado
 from estacao.core.charts.pressao_plot import PressaoPlot
@@ -35,6 +37,26 @@ class PressaoPlotTest(TestCase):
 
         self.assertIsInstance(self.obj.plot, Figure)
 
+    def test_has_plot_attribute(self):
+        self.assertTrue(hasattr(self.obj, 'plot'))
+
+    @mock_api
+    def test_plot_parameters(self):
+        data = self.mock_data()
+        self.obj.plot()
+        plot = self.obj.plot
+        self.assertEqual(plot.title.text, 'Pressão')
+        self.assertEqual(plot.plot_height, 400)
+        self.assertEqual(plot.x_range.factors, data.get('date'))
+
+    @mock_api
+    def test_plot_labels(self):
+        self.obj.plot()
+        plot = self.obj.plot
+
+        self.assertEqual(plot.xaxis.axis_label, 'Data')
+        self.assertEqual(plot.yaxis.axis_label, 'Pressão Atmosférica(mmHg)')
+        self.assertEqual(plot.xaxis.major_label_orientation, pi/3.8)
 
     def mock_data(self):
         data = consolidado
