@@ -84,8 +84,8 @@ class PressaoPlotTest(TestCase):
         hovertools = self.obj.plot.select(type=HoverTool)
         tools = [hover.tooltips for hover in hovertools]
 
-        self.assertListEqual(expected_pressao, tools[0])
-        self.assertListEqual(expected_pressao_hpa, tools[1])
+        self.assertIn(expected_pressao, tools)
+        self.assertIn(expected_pressao_hpa, tools)
 
     def mock_data(self):
         data = consolidado
