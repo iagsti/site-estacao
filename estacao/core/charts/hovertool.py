@@ -22,7 +22,6 @@ class ChartHoverTool:
                               names=[item], formatters=formatter)
 
             self.plot.add_tools(hover)
-            print(formatter)
 
     def get_formatter_for_column(self, column_name):
         return self.formatters.get(column_name)
