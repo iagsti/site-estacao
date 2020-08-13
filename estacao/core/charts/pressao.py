@@ -1,3 +1,6 @@
+from bokeh.layouts import layout
+from bokeh.embed import components
+
 from .pressao_plot import PressaoPlot
 from .graphs import LineGraph
 
@@ -26,3 +29,11 @@ class Pressao:
 
         plot = LineGraph(**line_settings).get_line()
         setattr(self, 'plot', plot)
+
+    def make_components(self):
+        plot = layout([self.plot], sizing_mode='stretch_width')
+        script, div = components(plot)
+        plot_components = {'script': script, 'div': div}
+
+        setattr(self, 'components', plot_components)
+
