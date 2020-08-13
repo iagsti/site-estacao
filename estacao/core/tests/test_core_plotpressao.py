@@ -1,5 +1,6 @@
 from django.test import TestCase
 from bokeh.plotting import Figure
+from bokeh.models import HoverTool
 from math import pi
 
 from .mock import mock_api, consolidado
@@ -57,6 +58,34 @@ class PressaoPlotTest(TestCase):
         self.assertEqual(plot.xaxis.axis_label, 'Data')
         self.assertEqual(plot.yaxis.axis_label, 'Pressão Atmosférica(mmHg)')
         self.assertEqual(plot.xaxis.major_label_orientation, pi/3.8)
+
+    def test_has_set_tools(self):
+        self.assertTrue(hasattr(self.obj, 'set_tools'))
+
+    @mock_api
+    def test_has_hovertool(self):
+        self.obj.plot()
+        obj = self.obj.plot.select(type=HoverTool)
+        self.assertIsInstance(obj[0], HoverTool)
+
+    @mock_api
+    def test_set_tools(self):
+        self.obj.plot()
+        expected_pressao = [
+            ('Pressão', '@pressao'),
+            ('Data', '@date{%d/%m/%Y %H:%M}')
+        ]
+
+        expected_pressao_hpa = [
+            ('Pressão hpa', '@pressao_hpa'),
+            ('Data', '@date{%d/%m/%Y %H:%M}')
+        ]
+
+        hovertools = self.obj.plot.select(type=HoverTool)
+        tools = [hover.tooltips for hover in hovertools]
+
+        self.assertListEqual(expected_pressao, tools[0])
+        self.assertListEqual(expected_pressao_hpa, tools[1])
 
     def mock_data(self):
         data = consolidado
