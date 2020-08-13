@@ -11,7 +11,7 @@ class Pressao:
         self.pressao_plot.plot()
         self.plot = self.pressao_plot.plot
 
-    def plot(self):
+    def plot_graph(self):
         self.make_plots()
         self.make_components()
 
