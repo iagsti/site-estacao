@@ -1,8 +1,11 @@
 from django.test import TestCase
 from bokeh.plotting import Figure
+from bokeh.embed import components
+from bokeh.layouts import layout
 
 from estacao.core.charts.pressao import Pressao
 from estacao.core.charts.pressao_plot import PressaoPlot
+from .mock import mock_api
 
 
 class PressaoTest(TestCase):
@@ -30,3 +33,22 @@ class PressaoTest(TestCase):
         self.obj.make_plots()
         pressao_hpa_glyph = self.obj.plot.select(name='pressao_hpa')[0]
         self.assertEqual(pressao_hpa_glyph.name, 'pressao_hpa')
+
+    def test_make_components(self):
+        self.obj.make_plots()
+        self.obj.make_components()
+        expected = ('script', 'div')
+        actual = tuple(self.obj.components.keys())
+        self.assertTupleEqual(expected, actual)
+
+    @mock_api
+    def test_get_div(self):
+        self.obj.make_plots()
+        self.obj.make_components()
+        self.assertIn('<div class="bk-root"', self.obj.get_div())
+
+    @mock_api
+    def test_get_scripts(self):
+        self.obj.make_plots()
+        self.obj.make_components()
+        self.assertIn('BokehJS', self.obj.get_scripts())
