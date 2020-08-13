@@ -1,4 +1,4 @@
-from bokeh.models import ColumnDataSource, DatetimeTickFormatter, HoverTool
+from bokeh.models import ColumnDataSource, DatetimeTickFormatter
 from bokeh.plotting import figure
 from math import pi
 
