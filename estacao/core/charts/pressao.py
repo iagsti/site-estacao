@@ -37,3 +37,10 @@ class Pressao:
 
         setattr(self, 'components', plot_components)
 
+    def get_div(self):
+        components = getattr(self, 'components')
+        return components.get('div')
+
+    def get_scripts(self):
+        components = getattr(self, 'components')
+        return components.get('script')
