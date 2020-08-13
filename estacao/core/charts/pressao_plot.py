@@ -1,10 +1,21 @@
-from bokeh.models import ColumnDataSource
+from bokeh.models import ColumnDataSource, DatetimeTickFormatter
+from bokeh.plotting import figure
+from math import pi
 
 from .data import DataConsolidado
+
+PLOT_HEIGHT = 400
+TICK_FORMAT = ['%d/%m/%Y %H:%M:%S']
+
 
 class PressaoPlot:
     def __init__(self):
         self.data = {'date': [], 'pressao': [], 'pressao_hpa': []}
+
+    def plot(self):
+        self.load_data()
+        self.set_data_source()
+        self.set_plot()
 
     def load_data(self):
         date = DataConsolidado('consolidado', 'data')
