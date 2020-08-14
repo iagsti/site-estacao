@@ -4,6 +4,7 @@
 {% block scripts %}
     {{ bokehcdn|safe }}
     {{ temperature.get_scripts|safe }}
+    {{ pressao.get_scripts|safe }}
 {% endblock scripts %}
 
 
@@ -43,6 +44,7 @@
                 <h5 class="card-title">{% trans 'Meteograma' %}</h5>
                 <div class="p-5">
                     {{ temperature.get_div|safe }}
+                    {{ pressao.get_div|safe }}
                 </div>
             </div>
         </div>
