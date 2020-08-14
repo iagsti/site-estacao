@@ -62,7 +62,7 @@ temperature_min = dict(temp_min=temperature_factory(6))
 
 temperature_max = dict(temp_max=temperature_factory(6))
 
-consolidado = dict(consolidado=consolidado_factory(6))
+consolidado = dict(consolidado=consolidado_factory(1))
 
 weather = weather_factory()
 
