@@ -34,7 +34,16 @@ class InstrumentsModelTest(TestCase):
 
     def test_create(self):
         """It should create an instrument on database"""
-        instrument = dict(title='Nebulosidade', text='Visibilidade horizontal',
-                          image='https://picsum.photos/200/300')
+        instrument = self.make_instrument()
         Instruments.objects.create(**instrument)
         self.assertTrue(Instruments.objects.exists())
+
+    def test_to_str(self):
+        instrument = self.make_instrument()
+        instance = Instruments.objects.create(**instrument)
+        self.assertEqual(str(instance), 'Nebulosidade')
+
+    def make_instrument(self):
+        instrument = dict(title='Nebulosidade', text='Visibilidade horizontal',
+                          image='https://picsum.photos/200/300')
+        return instrument
