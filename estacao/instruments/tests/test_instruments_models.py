@@ -32,3 +32,9 @@ class InstrumentsModelTest(TestCase):
         """upload_to image attribute should be equal instruments"""
         self.assertEqual(Instruments.image.field.upload_to, 'instruments')
 
+    def test_create(self):
+        """It should create an instrument on database"""
+        instrument = dict(title='Nebulosidade', text='Visibilidade horizontal',
+                          image='https://picsum.photos/200/300')
+        Instruments.objects.create(**instrument)
+        self.assertTrue(Instruments.objects.exists())
