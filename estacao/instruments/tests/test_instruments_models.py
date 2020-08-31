@@ -10,3 +10,20 @@ class InstrumentsModelTest(TestCase):
 
     def test_is_instance_of_Models(self):
         self.assertIsInstance(self.obj, models.Model)
+
+    def test_has_attributes(self):
+        attributes = ('title', 'text', 'image')
+        for expected in attributes:
+            message = '{} not found'.format(expected)
+            with self.subTest():
+                self.assertTrue(hasattr(self.obj, expected), msg=message)
+
+    def test_attributes_type(self):
+        attribute_instances = (('title', models.CharField),
+                               ('text', models.CharField),
+                               ('image', models.FileField))
+        for attribute in attribute_instances:
+            with self.subTest():
+                attr_name, instance = attribute
+                field = getattr(Instruments, attr_name).field
+                self.assertIsInstance(field, instance)
