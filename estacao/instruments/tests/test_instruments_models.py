@@ -20,7 +20,7 @@ class InstrumentsModelTest(TestCase):
 
     def test_attributes_type(self):
         attribute_instances = (('title', models.CharField),
-                               ('text', models.CharField),
+                               ('text', models.TextField),
                                ('image', models.FileField))
         for attribute in attribute_instances:
             with self.subTest():
