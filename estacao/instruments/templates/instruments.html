@@ -1,0 +1,62 @@
+{% extends 'main.html' %} 
+
+{% block content %}
+
+    <h1>Instrumentos</h1>
+
+    <div class="container-fluid">
+    
+        <p>
+            Nesta página estão descritas de forma resumida às técnicas adotadas pela 
+            Estação Meteorológica do IAG/USP para as observações de superfície, bem 
+            como a época de sua implantação. Detalhes (por menores) sobre o início das 
+            atividades da Estação Meteorológica em 1932 e procedimentos empregados até 
+            inícios dos anos 1960 podem ser encontrados em Santos (1964). Informações 
+            mais detalhadas sobre a instrumentação empregada e sobre os procedimentos 
+            de observação e da interpretação dos dados podem ser obtidas nas publicações da 
+            Organização Meteorológica Mundial (WMO, 1994; WMO, 1996).
+        </p>
+        <p>
+            As medidas da Estação Meteorológica tiveram início em 1933 a partir de 
+            observações horárias realizadas entre 7 e 10 horas e das 12 às 15 horas. 
+            Em março e julho do mesmo ano, foram incorporadas as observações das 21 e 24 
+            horas respectivamente. Entre janeiro de 1935 e outubro de 1945, as 
+            observações foram realizadas das 7 às 22 horas. A partir deste período até agosto 
+            de 1948, as observações permaneceram das 7 às 14 horas e às 21 horas. 
+            Posteriormente até dezembro de 1949, as observações voltaram a ser realizadas 
+            entre o período das 7 às 22 horas. Finalmente, a partir de janeiro de 1950, 
+            as observações meteorológicas passaram a ser realizadas ininterruptamente a 
+            cada hora entre 7 e 24 horas, todos os dias do ano. A Tabela 1 apresenta 
+            detalhes sobre o período de implementação dos instrumentos e das observações 
+            da Estação Meteorológica do IAG/USP, enquanto que a Tabela 2 apresenta o ano da 
+            implementação e descrição dos instrumentos instalados.
+        </p>
+        <p>
+            Os instrumentos mecânicos automáticos (anemógrafo, barógrafo, termógrafo, higrógrafo, 
+            pluviógrafo e actinógrafo) registram as informações continuamente durante às 24 
+            horas do dia. A partir de 2009, às observações coletadas pelos observadores meteorológicos
+             e as registradas pelos instrumentos automáticos, são arquivadas digitalmente em 
+             planilhas eletrônicas que são instantaneamente transferidas para o banco 
+             de dados e o portal da internet [http://www.estacao.iag.usp.br]. No dia seguinte às 
+             observações, as informações coletadas são confirmadas a partir da verificação da 
+             folha de observação e dos registradores automáticos e suas medições, sendo que da 
+             1 às 6 horas são inseridas nas folhas de observações.
+        <p>
+            É importante ressaltar que a Estação Meteorológica não adota o horário de verão e 
+            utiliza o tempo universal coordenado (TMC) ou tempo médio de Greenwich (TMG) menos 3 
+            horas, durante o ano inteiro.    
+        </p>
+    </div>
+
+
+    {% for instrument in instruments %} 
+        <div class="media mb-4">
+            <img src="{{ instrument.image.url }}" width="200" heigh="200" class="img-thumbnail mr-4">
+            <div class="media-body">
+                <h5 class="mt-0"><strong>{{ instrument.title }}</strong></h5>
+                {{ instrument.text }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}
+
