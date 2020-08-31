@@ -9,3 +9,7 @@ class Instruments(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = 'instrumento'
+        verbose_name_plural = 'instrumentos'
