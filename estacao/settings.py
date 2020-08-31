@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'estacao.core',
     'estacao.pessoal',
     'estacao.contact',
+    'estacao.instruments',
 ]
 
 MIDDLEWARE = [
