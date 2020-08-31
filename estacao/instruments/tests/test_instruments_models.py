@@ -27,3 +27,8 @@ class InstrumentsModelTest(TestCase):
                 attr_name, instance = attribute
                 field = getattr(Instruments, attr_name).field
                 self.assertIsInstance(field, instance)
+
+    def test_upload_image_destination(self):
+        """upload_to image attribute should be equal instruments"""
+        self.assertEqual(Instruments.image.field.upload_to, 'instruments')
+
