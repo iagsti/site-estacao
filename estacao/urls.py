@@ -24,6 +24,7 @@ urlpatterns = [
     path('pessoal/', include('estacao.pessoal.urls')),
     path('contato/', include('estacao.contact.urls')),
     path('instrumentos/', include('estacao.instruments.urls')),
+    path('boletins/', include('estacao.boletins.urls')),
     path('admin/', admin.site.urls),
 ]
 
