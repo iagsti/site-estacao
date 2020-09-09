@@ -13,6 +13,18 @@ class BoletinsGetTest(TestCase):
         self.assertTemplateUsed(self.resp, 'boletins.html')
         self.assertTemplateUsed(self.resp, 'main.html')
 
-    def test_context_has_boletins(self):
+    def test_context_has_climatologico(self):
+        self.assertContextHasMember('climatologico')
+
+    def test_context_has_trimestral(self):
+        self.assertContextHasMember('trimestral')
+
+    def test_context_has_mensal(self):
+        self.assertContextHasMember('mensal')
+
+    def test_context_has_tecnico(self):
+        self.assertContextHasMember('tecnico')
+
+    def assertContextHasMember(self, member):
         context = self.resp.context
-        self.assertIn('boletins', context)
+        self.assertIn(member, context)
