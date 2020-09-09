@@ -2,7 +2,6 @@ from django.test import TestCase
 from django.db import models
 
 from ..models import Boletin
-from ..managers import BoletinQuerySet
 
 
 class BoletinYearlyTest(TestCase):
