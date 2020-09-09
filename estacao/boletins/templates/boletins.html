@@ -1,1 +1,44 @@
 {% extends 'main.html' %}
+
+{% block content %}
+
+Desde 1997, a estação meteorológica do IAG/USP elabora anualmente um Boletim Climatológico. Em cada boletim é apresentada 
+uma síntese das observações meteorológicas, bem como os valores médios observados durante o ano. Para maiores detalhes sobre os dados, 
+análises e ou consultas, envie um e-mail para estacao@model.iag.usp.br
+
+Os seguintes Boletins Climatológicos da Estação Meteorológica do IAG estão disponibilizados em formato PDF:
+
+<p>Boletins Climatológicos</p>
+<ul>
+    {% for boletin in climatologico %}
+        <li>{{ boletin.title }}: {{ boletin.file }}</li>
+    {% endfor %}
+</ul>
+
+<p>Boletins trimestrais</p>
+
+<ul>
+    {% for boletin in trimestral %}
+        <li>{{ boletin.title }}: {{ boletin.file }}</li>
+    {% endfor %}
+</ul>
+
+<p>Boletins mensais</p>
+
+<ul>
+    {% for boletin in mensal %}
+        <li>{{ boletin.title }}: {{ boletin.file }}</li>
+    {% endfor %}
+</ul>
+
+<p>Boletins técnico</p>
+
+<ul>
+    {% for boletin in tecnico %}
+        <li>{{ boletin.title }}: {{ boletin.file }}</li>
+    {% endfor %}
+</ul>
+
+
+
+{% endblock content %}
