@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.db import models
 
 from ..models import Boletin
+from ..managers import BoletinQuerySet
 
 
 class BoletinYearlyTest(TestCase):
@@ -44,3 +45,31 @@ class BoletinYearlyTest(TestCase):
     def test_file_uploa_to_attribute(self):
         upload_to = Boletin.file.field.upload_to
         self.assertEqual(upload_to, 'boletins')
+
+
+class BoletimManagerTest(TestCase):
+    def setUp(self):
+        Boletin.objects.create(
+            title='2020', category='climatologico', file='boletim.pdf')
+        Boletin.objects.create(
+            title='Trimestral', category='trimestral', file='boletim.pdf')
+        Boletin.objects.create(
+            title='mensal', category='mensal', file='boletim.pdf')
+        Boletin.objects.create(
+            title='tecnico', category='tecnico', file='boletim.pdf')
+
+    def test_manager_climatologico(self):
+        resp = Boletin.objects.climatologico().first()
+        self.assertEqual(resp.category, 'climatologico')
+
+    def test_manager_trimestral(self):
+        resp = Boletin.objects.trimestral().first()
+        self.assertEqual(resp.category, 'trimestral')
+
+    def test_manager_mensal(self):
+        resp = Boletin.objects.mensal().first()
+        self.assertEqual(resp.category, 'mensal')
+
+    def test_manager_tecnico(self):
+        resp = Boletin.objects.tecnico().first()
+        self.assertEqual(resp.category, 'tecnico')
