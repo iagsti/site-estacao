@@ -25,6 +25,7 @@ urlpatterns = [
     path('contato/', include('estacao.contact.urls')),
     path('instrumentos/', include('estacao.instruments.urls')),
     path('boletins/', include('estacao.boletins.urls')),
+    path('museu/', include('estacao.museu.urls')),
     path('admin/', admin.site.urls),
 ]
 
