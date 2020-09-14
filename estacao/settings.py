@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'estacao.contact',
     'estacao.instruments',
     'estacao.boletins',
+    'estacao.museu',
 ]
 
 MIDDLEWARE = [
